@@ -138,7 +138,7 @@
                     <Button
                         android:background="@drawable/input_bg"
                         android:backgroundTint="@color/colorPrimary"
-                        android:id="@+id/btn_ok"
+                        android:id="@+id/btn_login"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:layout_marginTop="20dp"
