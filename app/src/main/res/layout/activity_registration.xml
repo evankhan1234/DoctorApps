@@ -1,170 +1,147 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlt_root"
-    android:background="@color/white"
-
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+
+    android:layout_height="match_parent"
+    android:background="#fafafa">
 
     <ScrollView
-        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <RelativeLayout
-            android:background="@color/white"
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
             <LinearLayout
-                android:background="@color/white"
-                android:layout_marginTop="10dp"
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
 
                 android:fitsSystemWindows="true"
                 android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
+                <ImageButton
+                    android:id="@+id/btn_header_back_"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/transparent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:paddingBottom="3px"
 
-                <LinearLayout
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                  
-                    android:orientation="horizontal">
+                    android:stateListAnimator="@null"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/back_icon" />
 
-                    <ImageView
-                        android:id="@+id/logo"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginTop="30dp"
-                        app:srcCompat="@drawable/doctor" />
-                    <LinearLayout
-                        android:layout_marginTop="20dp"
-                        android:orientation="vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_marginTop="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="মুঠোফোন"
-                            android:textColor="#333"
-                            android:textSize="25sp" />
-                        <TextView
-                            android:layout_marginTop="10dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="প্রেসক্রিপশন ফার্মেসী  "
-                            android:textColor="#333"
-                            android:textSize="19sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
                 <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="নিবন্ধন করুন"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="Let's Get Started!!"
                     android:textColor="#333"
-                    android:textSize="21sp" />
-                <LinearLayout
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
+                    android:text="Create an account to Q Allure to get all features"
+                    android:textColor="#b8b8b8"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
                     android:id="@+id/formHolder"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:layout_marginLeft="10dp"
 
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1.0"
                     android:gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
-
-
+                    android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/edit_text_name"
+                        android:id="@+id/et_name"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/input_bg"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_capsule_gray"
                         android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
                         android:drawablePadding="10dp"
-                        android:hint="ব্যবহারকারীর নাম"
-                        android:paddingLeft="39px"
-                        android:paddingTop="39px"
-                        android:paddingRight="39px"
-                        android:paddingBottom="39px"
-                        android:textColorHint="#666"
-                        android:textSize="16sp" />
+                        android:hint="Enter Name"
+                        android:paddingLeft="20dp" />
 
                     <EditText
-                        android:id="@+id/edit_text_email"
+                        android:id="@+id/et_email"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/input_bg"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_capsule_gray"
                         android:drawableLeft="@drawable/ic_baseline_email_24"
                         android:drawablePadding="10dp"
-                        android:hint="ই -মেইল"
-                        android:inputType="textEmailAddress"
-                        android:paddingLeft="39px"
-                        android:paddingTop="39px"
-                        android:paddingRight="39px"
-                        android:paddingBottom="39px"
-                        android:textColorHint="#666"
-                        android:textSize="16sp" />
+                        android:hint="Enter Email Address"
+                        android:paddingLeft="20dp" />
+
                     <EditText
-                        android:id="@+id/edit_text_phone"
+                        android:id="@+id/et_phone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
-                        android:background="@drawable/input_bg"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/edit_text_capsule_gray"
                         android:drawableLeft="@drawable/ic_baseline_smartphone_24"
                         android:drawablePadding="10dp"
-                        android:hint="মুঠোফোন"
+                        android:hint="Enter Phone Number"
                         android:inputType="number"
+                        android:paddingLeft="20dp" />
 
-                        android:paddingLeft="39px"
-                        android:paddingTop="39px"
-                        android:paddingRight="39px"
-                        android:paddingBottom="39px"
-                        android:textColorHint="#666"
-                        android:textSize="16sp" />
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="35px"
-                        android:background="@drawable/input_bg">
+                        android:layout_marginTop="20dp">
 
                         <EditText
-                            android:id="@+id/edit_text_password"
+                            android:id="@+id/et_password"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableLeft="@drawable/ic_input_lock"
+                            android:layout_height="55dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/edit_text_capsule_gray"
+                            android:drawableLeft="@drawable/password"
                             android:drawablePadding="10dp"
-                            android:hint="পাসওয়ার্ড"
+                            android:hint="Enter Password"
                             android:inputType="textPassword"
-                            android:paddingLeft="39px"
-                            android:paddingTop="39px"
-                            android:paddingRight="39px"
-                            android:paddingBottom="39px"
+                            android:paddingLeft="20dp"
                             android:textColorHint="#666"
                             android:textSize="16sp" />
 
                         <ImageView
 
                             android:id="@+id/show_pass"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
+                            android:layout_marginRight="20dp"
                             android:paddingRight="20px"
                             android:src="@drawable/show_password" />
                     </RelativeLayout>
@@ -172,66 +149,101 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="35px"
-                        android:background="@drawable/input_bg">
+                        android:layout_marginTop="20dp">
 
                         <EditText
-                            android:id="@+id/edit_text_confirm_password"
+                            android:id="@+id/et_confirm_password"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableLeft="@drawable/ic_input_lock"
+                            android:layout_height="55dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/edit_text_capsule_gray"
+                            android:drawableLeft="@drawable/password"
                             android:drawablePadding="10dp"
-                            android:hint="পাসওয়ার্ড নিশ্চিত করুন"
+                            android:hint="Enter Confirm Password"
                             android:inputType="textPassword"
-                            android:paddingLeft="39px"
-                            android:paddingTop="39px"
-                            android:paddingRight="39px"
-                            android:paddingBottom="39px"
+                            android:paddingLeft="20dp"
                             android:textColorHint="#666"
                             android:textSize="16sp" />
 
                         <ImageView
 
                             android:id="@+id/show_confirm_pass"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
+                            android:layout_marginRight="20dp"
                             android:paddingRight="20px"
                             android:src="@drawable/show_password" />
                     </RelativeLayout>
-                    <Button
-                        android:background="@drawable/input_bg"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:id="@+id/btn_ok"
+                    <TextView
+                        android:layout_marginLeft="20dp"
+                        android:id="@+id/tv_division"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="20dp"
+                        android:text="Specialization"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:id="@+id/spinner_specialization"
                         android:layout_width="match_parent"
                         android:layout_height="55dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:stateListAnimator="@null"
-                        android:text="নিবন্ধন"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-                </LinearLayout>
-                <TextView
+                        android:background="@drawable/test"
+                        android:visibility="visible" />
+                    <Button
+                        android:id="@+id/btn_registration"
+                        android:layout_width="200dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/capsule_button"
+                        android:text="Create"
+                        android:textColor="#fafafa"
+                        android:textSize="17sp" />
 
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="একাউন্ট আছে "
-                    android:textColor="#333"
-                    android:textSize="16sp" />
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="লগ ইন"
-                    android:textColor="#333"
-                    android:textSize="21sp" />
+                    <LinearLayout
+                        android:layout_marginTop="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <TextView
+
+                            android:id="@+id/textView13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:text="Already have an account?"
+                            android:textColor="#000"
+
+                            android:textSize="21sp" />
+
+                        <TextView
+                            android:id="@+id/tv_login"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="10dp"
+                            android:text="Sign In"
+                            android:textColor="#0050d3"
+                            android:textSize="21sp" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"/>
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -239,11 +251,19 @@
                 android:id="@+id/address_looking_up"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
-                android:visibility="gone"
-
                 android:layout_height="wrap_content"
+
                 android:layout_centerInParent="true"
-                />
+                android:visibility="gone" />
         </RelativeLayout>
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
+
 </RelativeLayout>

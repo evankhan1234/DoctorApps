@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rlt_root"
-    android:background="@color/white"
+    android:background="#fafafa"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -17,7 +17,7 @@
             android:layout_height="match_parent">
             <LinearLayout
                 android:background="@color/white"
-                android:layout_marginTop="20dp"
+
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,158 +27,114 @@
                 android:orientation="vertical">
 
 
-                <LinearLayout
+                <ImageView
+                    android:src="@drawable/online_doc_bg"
+                    android:id="@+id/img"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.7"
-                    android:gravity="bottom|center_vertical|center_horizontal|center"
-                    android:orientation="vertical">
+                    android:layout_height="340dp"/>
 
-                    <ImageView
-                        android:id="@+id/logo"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_marginTop="30dp"
-                        app:srcCompat="@drawable/doctor" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 </LinearLayout>
-                <TextView
-                    android:layout_marginTop="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="মুঠোফোন"
-                    android:textColor="#333"
-                    android:textSize="25sp" />
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="প্রেসক্রিপশন ফার্মেসী  "
-                    android:textColor="#333"
-                    android:textSize="19sp" />
-                <LinearLayout
+                <EditText
+                    android:id="@+id/et_email"
                     android:layout_marginTop="40dp"
-                    android:id="@+id/formHolder"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-
-                    android:layout_weight="1.0"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical"
+                    android:drawableLeft="@drawable/mail"
                     android:paddingLeft="20dp"
-                    android:paddingRight="20dp">
-
-
+                    android:drawablePadding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:hint="Enter Email Address"
+                    android:background="@drawable/edit_text_capsule_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"/>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35px"
+                    >
 
                     <EditText
-                        android:id="@+id/edit_text_email"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/et_password"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/input_bg"
-                        android:drawableLeft="@drawable/ic_baseline_supervised_user_circle_24"
+                        android:layout_height="55dp"
+                        android:background="@drawable/edit_text_capsule_gray"
+                        android:drawableLeft="@drawable/password"
                         android:drawablePadding="10dp"
-                        android:hint="ব্যবহারকারীর নাম"
-                        android:inputType="textEmailAddress"
-
-                        android:paddingLeft="39px"
-                        android:paddingTop="39px"
-                        android:paddingRight="39px"
-                        android:paddingBottom="39px"
+                        android:hint="Enter Password"
+                        android:inputType="textPassword"
+                        android:paddingLeft="20dp"
                         android:textColorHint="#666"
                         android:textSize="16sp" />
 
+                    <ImageView
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="35px"
-                        android:background="@drawable/input_bg">
+                        android:id="@+id/show_pass"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_centerVertical="true"
+                        android:paddingRight="20px"
+                        android:src="@drawable/show_password" />
+                </RelativeLayout>
 
-                        <EditText
-                            android:id="@+id/edit_text_password"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:drawableLeft="@drawable/ic_input_lock"
-                            android:drawablePadding="10dp"
-                            android:hint="পাসওয়ার্ড"
-                            android:inputType="textPassword"
-                            android:paddingLeft="39px"
-                            android:paddingTop="39px"
-                            android:paddingRight="39px"
-                            android:paddingBottom="39px"
-                            android:textColorHint="#666"
-                            android:textSize="16sp" />
-
-                        <ImageView
-
-                            android:id="@+id/show_pass"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:paddingRight="20px"
-                            android:src="@drawable/show_password" />
-                    </RelativeLayout>
-
-                    <TextView
-                        android:id="@+id/forgot"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="8dp"
-                        android:text="পাসওয়ার্ড ভুলে গেছেন ?"
-                        android:textColor="#555"
-                        android:textSize="16sp" />
-
-                    <Button
-                        android:background="@drawable/input_bg"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:id="@+id/btn_login"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:stateListAnimator="@null"
-                        android:text="লগ ইন"
-                        android:textColor="#fff"
-                        android:textSize="15sp" />
-                </LinearLayout>
-                <TextView
-
-                    android:layout_marginTop="40dp"
+                <Button
+                    android:id="@+id/btn_login"
+                    android:text="LOG IN"
+                    android:textSize="17sp"
+                    android:textColor="#fafafa"
                     android:layout_gravity="center_horizontal"
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="একাউন্ট নেই"
-                    android:textColor="#333"
-                    android:textSize="16sp" />
-                <TextView
-                    android:id="@+id/tv_sign_up"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="নিবন্ধন করুন"
-                    android:textColor="#333"
-                    android:textSize="21sp" />
-
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/capsule_button"
+                    android:layout_width="200dp"
+                    android:layout_height="50dp"/>
             </LinearLayout>
 
-            <androidx.core.widget.ContentLoadingProgressBar
-                android:id="@+id/address_looking_up"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:visibility="gone"
 
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                />
         </RelativeLayout>
+
     </ScrollView>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
+    <LinearLayout
+        android:layout_marginBottom="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Don't have any account?"
+            android:textColor="#000"
+
+            android:textSize="17sp" />
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/tv_sign_up"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textColor="#0050d3"
+            android:textSize="17sp" />
+    </LinearLayout>
 </RelativeLayout>
