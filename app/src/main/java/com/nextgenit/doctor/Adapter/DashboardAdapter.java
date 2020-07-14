@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.nextgenit.doctor.NetworkModel.PatientList;
 import com.nextgenit.doctor.R;
 
 import java.util.ArrayList;
@@ -21,9 +23,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
 
     private Activity mActivity = null;
-    private ArrayList<String> messageEntities;
+    private ArrayList<PatientList> messageEntities;
     
-    public DashboardAdapter(Activity activity, ArrayList<String> messageEntitie) {
+    public DashboardAdapter(Activity activity, ArrayList<PatientList> messageEntitie) {
         mActivity = activity;
         messageEntities = messageEntitie;
      
@@ -39,15 +41,19 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     @Override
     public void onBindViewHolder(final DashboardAdapter.DashboardListiewHolder holder, final int position) {
 
+        holder.tv_pharmacy_name.setText(messageEntities.get(position).pharmacy_name);
+        holder.tv_name.setText(messageEntities.get(position).patient_name);
+        holder.tv_age.setText("Age - "+messageEntities.get(position).age+","+messageEntities.get(position).gender_txt);
 
-        Log.e("Evan", "SDfs" + messageEntities.get(position));
-       // holder.btn_Dashboard.setHint(messageEntities.get(position).DashboardName);
-        String text = "<b><font color=#000 >রোগের বিবরণ : </font></b> <font color=#358ED3>এখন থেকে শুধু আপনি সাইন-ইন করে থাকলেই অনুবাদের ইতিহাস উপলভ্য হবে এবং সেটিকে আমার অ্যাক্টিভিটি বিকল্প থেকেই ম্যানেজ করা হবে ।</font>";
-
-        holder.tv_details.setText(Html.fromHtml(text));
-
-        Glide.with(mActivity).load("https://www.hardiagedcare.com.au/wp-content/uploads/2019/02/default-avatar-profile-icon-vector-18942381.jpg").placeholder(R.mipmap.ic_launcher).into(holder.user_icon);
-
+        holder.tv_phone_number.setText(messageEntities.get(position).mobile1);
+        holder.et_weight.setText(messageEntities.get(position).initial_weight);
+        holder.et_height.setText(messageEntities.get(position).initial_height);
+        if (messageEntities.get(position).gender_txt.equals("Male")){
+            holder.user_icon.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.male));
+        }
+        else{
+            holder.user_icon.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.female));
+        }
     }
 
     @Override
@@ -58,14 +64,25 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     public class DashboardListiewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tv_details;
-        private CircleImageView user_icon;
+        private TextView tv_pharmacy_name;
+        private TextView tv_name;
+        private TextView tv_age;
+        private TextView tv_phone_number;
+        private TextView et_weight;
+        private TextView et_height;
+        private RoundedImageView user_icon;
 
 
         public DashboardListiewHolder(View itemView) {
             super(itemView);
-            tv_details = itemView.findViewById(R.id.tv_details);
+
             user_icon = itemView.findViewById(R.id.user_icon);
+           tv_pharmacy_name = itemView.findViewById(R.id.tv_pharmacy_name);
+            tv_name = itemView.findViewById(R.id.tv_name);
+            tv_age = itemView.findViewById(R.id.tv_age);
+            tv_phone_number = itemView.findViewById(R.id.tv_phone_number);
+            et_weight = itemView.findViewById(R.id.et_weight);
+            et_height = itemView.findViewById(R.id.et_height);
 
 
         }
