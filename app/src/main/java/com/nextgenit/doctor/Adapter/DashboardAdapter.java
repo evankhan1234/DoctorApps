@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nextgenit.doctor.Interface.IClickListener;
 import com.nextgenit.doctor.NetworkModel.PatientList;
 import com.nextgenit.doctor.R;
 
@@ -24,11 +25,11 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     private Activity mActivity = null;
     private ArrayList<PatientList> messageEntities;
-    
-    public DashboardAdapter(Activity activity, ArrayList<PatientList> messageEntitie) {
+    private IClickListener iClickListener;
+    public DashboardAdapter(Activity activity, ArrayList<PatientList> messageEntitie,IClickListener iClickListeners) {
         mActivity = activity;
         messageEntities = messageEntitie;
-     
+        iClickListener=iClickListeners;
     }
 
 
@@ -54,6 +55,12 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         else{
             holder.user_icon.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.female));
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iClickListener.show(messageEntities.get(position));
+            }
+        });
     }
 
     @Override
