@@ -1,0 +1,468 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlt_root"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:background="#fafafa">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+           >
+
+
+
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/btn_header_back_"
+
+
+                android:fitsSystemWindows="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+
+                        android:id="@+id/img_close"
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/close_cross"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+                    <ImageView
+                        android:id="@+id/img_log_out"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/logout"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="0dp"
+                    android:text="Prescription Engine"
+                    android:textColor="#333"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="Create a patient account to get"
+                    android:textColor="#b8b8b8"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="an appointment"
+                    android:textColor="#b8b8b8"
+                    android:textStyle="bold"
+                    android:textSize="17sp" />
+
+                <LinearLayout
+                    android:id="@+id/formHolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+
+
+                    android:layout_weight="1.0"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+
+                    <TextView
+
+                        android:id="@+id/tv_diabetes_medicine_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Diagnosis"
+                        android:textColor="@color/black"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_marginTop="30px"
+                        android:background="@drawable/background_layout"
+
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/tv_diagnosis_for"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+
+                                android:tag="40"
+                                android:text="Select"
+                                android:textColor="@color/black"
+                                android:textSize="40px"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:visibility="gone"
+                                android:layout_marginRight="25dp"
+
+                                android:layout_marginTop="10px"
+
+
+                                android:nestedScrollingEnabled="false"
+                                android:id="@+id/rc_diagnosis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="0px"/>
+                            <TextView
+
+                                android:layout_alignParentRight="true"
+
+                                android:layout_marginTop="30px"
+                                android:textColor="#666"
+                                android:tag="40"
+                                android:textSize="40px"
+                                android:layout_marginRight="10dp"
+                                android:id="@+id/tv_diagnosis"
+                                android:background="@drawable/text_back"
+                                android:padding="25px"
+                                android:layout_width="120px"
+                                android:layout_height="120px"
+                                android:layout_marginBottom="10px"
+                                android:text=""
+                                android:ems="10"
+                                android:inputType="textPostalAddress"/>
+
+                            />
+                        </RelativeLayout>
+
+
+
+                    </LinearLayout>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Investigation"
+                        android:textColor="@color/black"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_marginTop="30px"
+                        android:background="@drawable/background_layout"
+
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/tv_investigation_for"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+
+                                android:tag="40"
+                                android:text="Select"
+                                android:textColor="@color/black"
+                                android:textSize="40px"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:visibility="gone"
+                                android:layout_marginRight="25dp"
+
+                                android:layout_marginTop="10px"
+
+
+                                android:nestedScrollingEnabled="false"
+                                android:id="@+id/rc_investigation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="0px"/>
+                            <TextView
+
+                                android:layout_alignParentRight="true"
+
+                                android:layout_marginTop="30px"
+                                android:textColor="#666"
+                                android:tag="40"
+                                android:textSize="40px"
+                                android:layout_marginRight="10dp"
+                                android:id="@+id/tv_investigation"
+                                android:background="@drawable/text_back"
+                                android:padding="25px"
+                                android:layout_width="120px"
+                                android:layout_height="120px"
+                                android:layout_marginBottom="10px"
+                                android:text=""
+                                android:ems="10"
+                                android:inputType="textPostalAddress"/>
+
+                            />
+                        </RelativeLayout>
+
+
+
+                    </LinearLayout>
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:text="Medication"
+                        android:textColor="@color/black"
+                        android:textSize="19sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:layout_marginTop="30px"
+                        android:background="@drawable/background_layout"
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content">
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:id="@+id/tv_medication_for"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:layout_marginTop="20dp"
+                                android:layout_marginLeft="5dp"
+
+                                android:tag="40"
+                                android:text="Select"
+                                android:textColor="@color/black"
+                                android:textSize="40px"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:visibility="gone"
+                                android:layout_marginRight="15dp"
+
+                                android:layout_marginTop="10px"
+
+
+                                android:nestedScrollingEnabled="false"
+                                android:id="@+id/rc_medication"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="0px"/>
+                            <TextView
+
+                                android:layout_alignParentRight="true"
+
+                                android:layout_marginTop="30px"
+                                android:textColor="#666"
+                                android:tag="40"
+                                android:textSize="40px"
+                                android:layout_marginRight="10dp"
+                                android:id="@+id/tv_medication"
+                                android:background="@drawable/text_back"
+                                android:padding="25px"
+                                android:layout_width="120px"
+                                android:layout_height="120px"
+                                android:layout_marginBottom="10px"
+                                android:text=""
+                                android:ems="10"
+                                android:inputType="textPostalAddress"/>
+
+
+                        </RelativeLayout>
+
+
+
+                    </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="30px"
+                            android:background="@drawable/background_layout"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/tv_dose_for"
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginLeft="5dp"
+
+                                    android:tag="40"
+                                    android:text="Select"
+                                    android:textColor="@color/black"
+                                    android:textSize="40px"
+                                    />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:visibility="gone"
+                                    android:layout_marginRight="25dp"
+
+                                    android:layout_marginTop="10px"
+
+
+                                    android:nestedScrollingEnabled="false"
+                                    android:id="@+id/rc_dose"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="0px"/>
+                                <TextView
+
+                                    android:layout_alignParentRight="true"
+
+                                    android:layout_marginTop="30px"
+                                    android:textColor="#666"
+                                    android:tag="40"
+                                    android:textSize="40px"
+                                    android:layout_marginRight="10dp"
+                                    android:id="@+id/tv_dose"
+                                    android:background="@drawable/text_back"
+                                    android:padding="25px"
+                                    android:layout_width="120px"
+                                    android:layout_height="120px"
+                                    android:layout_marginBottom="10px"
+                                    android:text=""
+                                    android:ems="10"
+                                    android:inputType="textPostalAddress"/>
+
+
+                            </RelativeLayout>
+
+
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="30px"
+                            android:background="@drawable/background_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/tv_duration_for"
+
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:layout_marginTop="20dp"
+                                    android:layout_marginLeft="5dp"
+
+                                    android:tag="40"
+                                    android:text="Select"
+                                    android:textColor="@color/black"
+                                    android:textSize="40px"
+                                    />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:visibility="gone"
+                                    android:layout_marginRight="25dp"
+
+                                    android:layout_marginTop="10px"
+
+
+                                    android:nestedScrollingEnabled="false"
+                                    android:id="@+id/rc_duration"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="0px"/>
+                                <TextView
+
+                                    android:layout_alignParentRight="true"
+
+                                    android:layout_marginTop="30px"
+                                    android:textColor="#666"
+                                    android:tag="40"
+                                    android:textSize="40px"
+                                    android:layout_marginRight="10dp"
+                                    android:id="@+id/tv_duration"
+                                    android:background="@drawable/text_back"
+                                    android:padding="25px"
+                                    android:layout_width="120px"
+                                    android:layout_height="120px"
+                                    android:layout_marginBottom="10px"
+                                    android:text=""
+                                    android:ems="10"
+                                    android:inputType="textPostalAddress"/>
+
+
+                            </RelativeLayout>
+
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <androidx.core.widget.ContentLoadingProgressBar
+                android:id="@+id/address_looking_up"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_centerInParent="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
+</RelativeLayout>

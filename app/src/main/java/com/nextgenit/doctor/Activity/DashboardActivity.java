@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +16,9 @@ import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.nextgenit.doctor.Adapter.DashboardAdapter;
+import com.nextgenit.doctor.Interface.IClickListener;
 import com.nextgenit.doctor.Network.IRetrofitApi;
+import com.nextgenit.doctor.NetworkModel.PatientList;
 import com.nextgenit.doctor.NetworkModel.PatientListResponses;
 import com.nextgenit.doctor.NetworkModel.Pharmacy;
 import com.nextgenit.doctor.NetworkModel.PharmacyListResponses;
@@ -94,7 +97,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void accept(PatientListResponses patientListResponses) throws Exception {
                 Log.e("study", "study" + new Gson().toJson(patientListResponses));
-                dashboardAdapter = new DashboardAdapter(mActivity, patientListResponses.data_list);
+                dashboardAdapter = new DashboardAdapter(mActivity, patientListResponses.data_list,iClickListener);
 
                 rcv_list.setAdapter(dashboardAdapter);
                 progress_bar.setVisibility(View.GONE);
@@ -114,7 +117,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void accept(PatientListResponses patientListResponses) throws Exception {
                 Log.e("study", "study" + new Gson().toJson(patientListResponses));
-                dashboardAdapter = new DashboardAdapter(mActivity, patientListResponses.data_list);
+                dashboardAdapter = new DashboardAdapter(mActivity, patientListResponses.data_list,iClickListener);
 
                 rcv_list.setAdapter(dashboardAdapter);
                 progress_bar.setVisibility(View.GONE);
@@ -149,6 +152,14 @@ public class DashboardActivity extends AppCompatActivity {
 
     }
 
+    private IClickListener iClickListener= new IClickListener() {
+        @Override
+        public void show(PatientList patientList) {
+            Intent intent = new Intent(DashboardActivity.this, PrescriptionEngineActivity.class);
+            intent.putExtra("patient", patientList);
+            startActivity(intent);
+        }
+    };
     @Override
     protected void onResume() {
         super.onResume();
