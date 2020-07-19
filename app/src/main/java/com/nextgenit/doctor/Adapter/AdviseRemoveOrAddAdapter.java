@@ -15,14 +15,14 @@ import com.nextgenit.doctor.R;
 
 import java.util.ArrayList;
 
-public class MedicationRemoveOrAddAdapter extends RecyclerView.Adapter<MedicationRemoveOrAddAdapter.TagListiewHolder> {
+public class AdviseRemoveOrAddAdapter extends RecyclerView.Adapter<AdviseRemoveOrAddAdapter.TagListiewHolder> {
 
 
     private Activity mActivity = null;
     private ArrayList<String> messageEntities;
     String types;
 
-    public MedicationRemoveOrAddAdapter(Activity activity, ArrayList<String> messageEntitie, String type) {
+    public AdviseRemoveOrAddAdapter(Activity activity, ArrayList<String> messageEntitie, String type) {
         mActivity = activity;
         messageEntities = messageEntitie;
         types = type;
@@ -30,15 +30,15 @@ public class MedicationRemoveOrAddAdapter extends RecyclerView.Adapter<Medicatio
 
 
     @Override
-    public MedicationRemoveOrAddAdapter.TagListiewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AdviseRemoveOrAddAdapter.TagListiewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_investigation_remove_or_add, null);
 
 
-        return new MedicationRemoveOrAddAdapter.TagListiewHolder(view);
+        return new AdviseRemoveOrAddAdapter.TagListiewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MedicationRemoveOrAddAdapter.TagListiewHolder holder, final int position) {
+    public void onBindViewHolder(AdviseRemoveOrAddAdapter.TagListiewHolder holder, final int position) {
 
         if (types.equals("D")) {
             holder.mButtonTagList.setText(messageEntities.get(position));
@@ -47,7 +47,7 @@ public class MedicationRemoveOrAddAdapter extends RecyclerView.Adapter<Medicatio
                 public void onClick(View view) {
                     messageEntities.remove(position);
                     notifyDataSetChanged();
-                    PrescriptionEngineActivity.MedicationShow();
+                    PrescriptionEngineActivity.AdviceShow();
                 }
             });
         }
@@ -75,3 +75,4 @@ public class MedicationRemoveOrAddAdapter extends RecyclerView.Adapter<Medicatio
         }
     }
 }
+

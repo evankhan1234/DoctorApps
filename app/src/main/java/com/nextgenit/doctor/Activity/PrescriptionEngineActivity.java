@@ -4,21 +4,37 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nextgenit.doctor.Adapter.AdviseRemoveOrAddAdapter;
 import com.nextgenit.doctor.Adapter.DiagnosisRemoveOrAddAdapter;
+import com.nextgenit.doctor.Adapter.DoseRemoveOrAddAdapter;
+import com.nextgenit.doctor.Adapter.DurationRemoveOrAddAdapter;
 import com.nextgenit.doctor.Adapter.InvestigationRemoveOrAddAdapter;
 import com.nextgenit.doctor.Adapter.MedicationRemoveOrAddAdapter;
+import com.nextgenit.doctor.Filterable.SpinnerForAdvise;
 import com.nextgenit.doctor.Filterable.SpinnerForDiagnosis;
+import com.nextgenit.doctor.Filterable.SpinnerForDose;
+import com.nextgenit.doctor.Filterable.SpinnerForDuration;
 import com.nextgenit.doctor.Filterable.SpinnerForInvestigation;
 import com.nextgenit.doctor.Filterable.SpinnerForMedication;
+import com.nextgenit.doctor.Interface.AdviceTypeInterface;
+import com.nextgenit.doctor.Interface.AdviseInterface;
 import com.nextgenit.doctor.Interface.DiagnosisInterface;
 import com.nextgenit.doctor.Interface.DiagnosisTypeInterface;
+import com.nextgenit.doctor.Interface.DoseInterface;
+import com.nextgenit.doctor.Interface.DoseTypeInterface;
+import com.nextgenit.doctor.Interface.DurationInterface;
+import com.nextgenit.doctor.Interface.DurationTypeInterface;
 import com.nextgenit.doctor.Interface.InvestigationInterface;
 import com.nextgenit.doctor.Interface.InvestigationTypeInterface;
 import com.nextgenit.doctor.Interface.MedicationInterface;
@@ -49,84 +65,177 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     TextView tv_investigation;
     TextView tv_diagnosis;
     TextView tv_medication;
-    static  TextView tv_investigation_for;
-    static  TextView tv_diagnosis_for;
-    static  TextView tv_medication_for;
+    TextView tv_dose;
+    TextView tv_duration;
+    TextView tv_advise;
+    static TextView tv_investigation_for;
+    static TextView tv_diagnosis_for;
+    static TextView tv_medication_for;
+    static TextView tv_dose_for;
+    static TextView tv_duration_for;
+    static TextView tv_advise_for;
     SpinnerForInvestigation spinnerForInvestigation;
     SpinnerForDiagnosis spinnerForDiagnosis;
     SpinnerForMedication spinnerForMedication;
+    SpinnerForDose spinnerForDose;
+    SpinnerForDuration spinnerForDuration;
+    SpinnerForAdvise spinnerForAdvise;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IRetrofitApi mService;
     ProgressBar progress_bar;
     ArrayList<String> investigationArrayList = new ArrayList<>();
     ArrayList<String> diagnosisArrayList = new ArrayList<>();
     ArrayList<String> medicationArrayList = new ArrayList<>();
+    ArrayList<String> doseArrayList = new ArrayList<>();
+    ArrayList<String> durationArrayList = new ArrayList<>();
+    ArrayList<String> adviseArrayList = new ArrayList<>();
     InvestigationRemoveOrAddAdapter investigationRemoveOrAddAdapter;
     MedicationRemoveOrAddAdapter medicationRemoveOrAddAdapter;
     DiagnosisRemoveOrAddAdapter diagnosisRemoveOrAddAdapter;
+    DoseRemoveOrAddAdapter doseRemoveOrAddAdapter;
+    DurationRemoveOrAddAdapter durationRemoveOrAddAdapter;
+    AdviseRemoveOrAddAdapter adviseRemoveOrAddAdapter;
     static ArrayList<String> arrayList = new ArrayList<>();
     static ArrayList<String> arrayListDignosis = new ArrayList<>();
     static ArrayList<String> arrayListMedication = new ArrayList<>();
+    static ArrayList<String> arrayListDose = new ArrayList<>();
+    static ArrayList<String> arrayListDuration = new ArrayList<>();
+    static ArrayList<String> arrayListAdvise = new ArrayList<>();
     static RecyclerView rc_investigation;
     static RecyclerView rc_diagnosis;
     static RecyclerView rc_medication;
+    static RecyclerView rc_dose;
+    static RecyclerView rc_advise;
+    static RecyclerView rc_duration;
+    LinearLayout linear_diagnosis;
+    Button btn_prescription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription_engine);
-        mService= Common.getApiXact();
-        tv_medication_for=findViewById(R.id.tv_medication_for);
-        tv_medication=findViewById(R.id.tv_medication);
-        rc_investigation=findViewById(R.id.rc_investigation);
-        tv_diagnosis_for=findViewById(R.id.tv_diagnosis_for);
-        tv_diagnosis=findViewById(R.id.tv_diagnosis);
-        rc_diagnosis=findViewById(R.id.rc_diagnosis);
-        rc_medication=findViewById(R.id.rc_medication);
-        tv_investigation_for=findViewById(R.id.tv_investigation_for);
+        mService = Common.getApiXact();
+        tv_duration = findViewById(R.id.tv_duration);
+        tv_advise = findViewById(R.id.tv_advise);
+        tv_medication_for = findViewById(R.id.tv_medication_for);
+        tv_advise_for = findViewById(R.id.tv_advise_for);
+        tv_duration_for = findViewById(R.id.tv_duration_for);
+        rc_dose = findViewById(R.id.rc_dose);
+        rc_advise = findViewById(R.id.rc_advise);
+        rc_duration = findViewById(R.id.rc_duration);
+        tv_dose = findViewById(R.id.tv_dose);
+        tv_dose_for = findViewById(R.id.tv_dose_for);
+        tv_medication = findViewById(R.id.tv_medication);
+        rc_investigation = findViewById(R.id.rc_investigation);
+        tv_diagnosis_for = findViewById(R.id.tv_diagnosis_for);
+        tv_diagnosis = findViewById(R.id.tv_diagnosis);
+        rc_diagnosis = findViewById(R.id.rc_diagnosis);
+        rc_medication = findViewById(R.id.rc_medication);
+        tv_investigation_for = findViewById(R.id.tv_investigation_for);
+        linear_diagnosis = findViewById(R.id.linear_diagnosis);
+        btn_prescription = findViewById(R.id.btn_prescription);
         LinearLayoutManager lm1 = new LinearLayoutManager(this);
         LinearLayoutManager lm2 = new LinearLayoutManager(this);
         LinearLayoutManager lm3 = new LinearLayoutManager(this);
+        LinearLayoutManager lm4 = new LinearLayoutManager(this);
+        LinearLayoutManager lm5 = new LinearLayoutManager(this);
+        LinearLayoutManager lm6 = new LinearLayoutManager(this);
         lm1.setOrientation(LinearLayoutManager.VERTICAL);
         lm2.setOrientation(LinearLayoutManager.VERTICAL);
         lm3.setOrientation(LinearLayoutManager.VERTICAL);
+        lm4.setOrientation(LinearLayoutManager.VERTICAL);
+        lm5.setOrientation(LinearLayoutManager.VERTICAL);
+        lm6.setOrientation(LinearLayoutManager.VERTICAL);
         rc_investigation.setLayoutManager(lm1);
         rc_diagnosis.setLayoutManager(lm2);
         rc_medication.setLayoutManager(lm3);
-        tv_investigation=findViewById(R.id.tv_investigation);
-        progress_bar=findViewById(R.id.progress_bar);
+        rc_dose.setLayoutManager(lm4);
+        rc_duration.setLayoutManager(lm5);
+        rc_advise.setLayoutManager(lm6);
+        tv_investigation = findViewById(R.id.tv_investigation);
+        progress_bar = findViewById(R.id.progress_bar);
         patientList = getIntent().getExtras().getParcelable("patient");
 
         tv_investigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForInvestigation = new SpinnerForInvestigation(PrescriptionEngineActivity.this, investigationArrayList, "Select Investigation", investigationInterface, "D",investigationTypeInterfac);
+                spinnerForInvestigation = new SpinnerForInvestigation(PrescriptionEngineActivity.this, investigationArrayList, "Select Investigation", investigationInterface, "D", investigationTypeInterfac);
                 spinnerForInvestigation.showSpinerDialog();
             }
         });
         tv_diagnosis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForDiagnosis = new SpinnerForDiagnosis(PrescriptionEngineActivity.this, diagnosisArrayList, "Select Diagnosis", diagnosisInterface, "D",diagnosisTypeInterface);
+                spinnerForDiagnosis = new SpinnerForDiagnosis(PrescriptionEngineActivity.this, diagnosisArrayList, "Select Diagnosis", diagnosisInterface, "D", diagnosisTypeInterface);
                 spinnerForDiagnosis.showSpinerDialog();
             }
         });
         tv_medication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForMedication = new SpinnerForMedication(PrescriptionEngineActivity.this, medicationArrayList, "Select Medication", medicationInterface, "D",medicationTypeInterface);
+                spinnerForMedication = new SpinnerForMedication(PrescriptionEngineActivity.this, medicationArrayList, "Select Medication", medicationInterface, "D", medicationTypeInterface);
                 spinnerForMedication.showSpinerDialog();
             }
         });
-    }
-    @Override
-    protected void onResume() {
-        super.onResume();
+
+        tv_dose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface);
+                spinnerForDose.showSpinerDialog();
+            }
+        });
+        tv_duration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Dose", durationInterface, "D", durationTypeInterface);
+                spinnerForDuration.showSpinerDialog();
+            }
+        });
+        tv_advise.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinnerForAdvise = new SpinnerForAdvise(PrescriptionEngineActivity.this, adviseArrayList, "Select Advise", adviseInterface, "D", adviceTypeInterface);
+                spinnerForAdvise.showSpinerDialog();
+            }
+        });
+        final ProgressDialog progressDoalog;
+        progressDoalog = new ProgressDialog(PrescriptionEngineActivity.this);
+        progressDoalog.setMessage("Data Syncing....");
+        progressDoalog.show();
         loadData();
         loadDiagnosisData();
         loadMedicationData();
+        loadDoseData();
+        loadDurationData();
+        loadAdviseData();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                progressDoalog.dismiss();
+            }
+        }, 12000);
+        btn_prescription.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrayList.clear();
+                arrayListDignosis.clear();
+                arrayListMedication.clear();
+                arrayListDuration.clear();
+                arrayListDose.clear();
+                arrayListAdvise.clear();
+            }
+        });
     }
 
-    private InvestigationInterface investigationInterface= new InvestigationInterface() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private InvestigationInterface investigationInterface = new InvestigationInterface() {
         @Override
         public void postion(int position, String Type) {
             investigationRemoveOrAddAdapter = new InvestigationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayList, "D");
@@ -147,7 +256,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             investigationRemoveOrAddAdapter.notifyDataSetChanged();
         }
     };
-    private DiagnosisInterface diagnosisInterface= new DiagnosisInterface() {
+    private DiagnosisInterface diagnosisInterface = new DiagnosisInterface() {
         @Override
         public void postion(int position, String Type) {
             diagnosisRemoveOrAddAdapter = new DiagnosisRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDignosis, "D");
@@ -168,7 +277,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             diagnosisRemoveOrAddAdapter.notifyDataSetChanged();
         }
     };
-    private DiagnosisTypeInterface diagnosisTypeInterface= new DiagnosisTypeInterface() {
+    private DiagnosisTypeInterface diagnosisTypeInterface = new DiagnosisTypeInterface() {
         @Override
         public void add(String type) {
             diagnosisRemoveOrAddAdapter = new DiagnosisRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDignosis, "D");
@@ -189,6 +298,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             diagnosisRemoveOrAddAdapter.notifyDataSetChanged();
         }
     };
+
     public static void Show() {
         if (arrayList.size() > 0) {
             tv_investigation_for.setVisibility(View.GONE);
@@ -199,6 +309,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         }
 
     }
+
     public static void DiagnosisShow() {
         if (arrayListDignosis.size() > 0) {
             tv_diagnosis_for.setVisibility(View.GONE);
@@ -209,6 +320,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         }
 
     }
+
     public static void MedicationShow() {
         if (arrayListMedication.size() > 0) {
             tv_medication_for.setVisibility(View.GONE);
@@ -219,6 +331,40 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         }
 
     }
+
+    public static void DoseShow() {
+        if (arrayListDose.size() > 0) {
+            tv_dose_for.setVisibility(View.GONE);
+            rc_dose.setVisibility(View.VISIBLE);
+        } else {
+            rc_dose.setVisibility(View.GONE);
+            tv_dose_for.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public static void DurationShow() {
+        if (arrayListDuration.size() > 0) {
+            tv_duration_for.setVisibility(View.GONE);
+            rc_duration.setVisibility(View.VISIBLE);
+        } else {
+            rc_duration.setVisibility(View.GONE);
+            tv_duration_for.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public static void AdviceShow() {
+        if (arrayListAdvise.size() > 0) {
+            tv_advise_for.setVisibility(View.GONE);
+            rc_advise.setVisibility(View.VISIBLE);
+        } else {
+            rc_advise.setVisibility(View.GONE);
+            tv_advise_for.setVisibility(View.VISIBLE);
+        }
+
+    }
+
     InvestigationTypeInterface investigationTypeInterfac = new InvestigationTypeInterface() {
         @Override
         public void add(String type) {
@@ -241,7 +387,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
         }
     };
-    private MedicationInterface medicationInterface= new MedicationInterface() {
+    private MedicationInterface medicationInterface = new MedicationInterface() {
         @Override
         public void postion(int position, String Type) {
             medicationRemoveOrAddAdapter = new MedicationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListMedication, "D");
@@ -260,12 +406,14 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
                 tv_medication_for.setVisibility(View.VISIBLE);
             }
             medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            onDoseShow();
         }
     };
 
-    private MedicationTypeInterface medicationTypeInterface= new MedicationTypeInterface() {
+    private MedicationTypeInterface medicationTypeInterface = new MedicationTypeInterface() {
         @Override
         public void add(String type) {
+
             medicationRemoveOrAddAdapter = new MedicationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListMedication, "D");
             rc_medication.setAdapter(medicationRemoveOrAddAdapter);
             spinnerForMedication.closeSpinerDialog();
@@ -282,65 +430,291 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
                 tv_medication_for.setVisibility(View.VISIBLE);
             }
             medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            onDoseShow();
+
         }
     };
+
+    private void onDoseShow() {
+        spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface);
+        spinnerForDose.showSpinerDialog();
+    }
+
+    private void onDurationShow() {
+
+        spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Dose", durationInterface, "D", durationTypeInterface);
+        spinnerForDuration.showSpinerDialog();
+
+
+    }
+    private void onAdviseShow(){
+        spinnerForAdvise = new SpinnerForAdvise(PrescriptionEngineActivity.this, adviseArrayList, "Select Advise", adviseInterface, "D",adviceTypeInterface);
+        spinnerForAdvise.showSpinerDialog();
+    }
+
+    ///////Dose////////////
+    private DoseInterface doseInterface = new DoseInterface() {
+        @Override
+        public void postion(int position, String Type) {
+            doseRemoveOrAddAdapter = new DoseRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDose, "D");
+            rc_dose.setAdapter(doseRemoveOrAddAdapter);
+            spinnerForDose.closeSpinerDialog();
+            arrayListDose.add(doseArrayList.get(position));
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayListDose);
+//            arrayListDose.clear();
+//            arrayListDose.addAll(hs);
+            if (arrayListDose.size() > 0) {
+                tv_dose_for.setVisibility(View.GONE);
+                rc_dose.setVisibility(View.VISIBLE);
+            } else {
+                rc_dose.setVisibility(View.GONE);
+                tv_dose_for.setVisibility(View.VISIBLE);
+            }
+            doseRemoveOrAddAdapter.notifyDataSetChanged();
+            onDurationShow();
+        }
+    };
+
+    private DoseTypeInterface doseTypeInterface = new DoseTypeInterface() {
+        @Override
+        public void add(String type) {
+            doseRemoveOrAddAdapter = new DoseRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDose, "D");
+            rc_dose.setAdapter(doseRemoveOrAddAdapter);
+            spinnerForDose.closeSpinerDialog();
+            arrayListDose.add(type);
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayListDose);
+//            arrayListDose.clear();
+//            arrayListDose.addAll(hs);
+            if (arrayListDose.size() > 0) {
+                tv_dose_for.setVisibility(View.GONE);
+                rc_dose.setVisibility(View.VISIBLE);
+            } else {
+                rc_dose.setVisibility(View.GONE);
+                tv_dose_for.setVisibility(View.VISIBLE);
+            }
+            doseRemoveOrAddAdapter.notifyDataSetChanged();
+            onDurationShow();
+        }
+    };
+
+
+    ///////////Dose/////
+    ///////Duration////////////
+    private DurationInterface durationInterface = new DurationInterface() {
+        @Override
+        public void postion(int position, String Type) {
+            durationRemoveOrAddAdapter = new DurationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDuration, "D");
+            rc_duration.setAdapter(durationRemoveOrAddAdapter);
+            spinnerForDuration.closeSpinerDialog();
+            arrayListDuration.add(durationArrayList.get(position));
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayListDuration);
+//            arrayListDuration.clear();
+//            arrayListDuration.addAll(hs);
+            if (arrayListDuration.size() > 0) {
+                tv_duration_for.setVisibility(View.GONE);
+                rc_duration.setVisibility(View.VISIBLE);
+            } else {
+                rc_duration.setVisibility(View.GONE);
+                tv_duration_for.setVisibility(View.VISIBLE);
+            }
+            durationRemoveOrAddAdapter.notifyDataSetChanged();
+            onAdviseShow();
+        }
+    };
+
+    private DurationTypeInterface durationTypeInterface = new DurationTypeInterface() {
+        @Override
+        public void add(String type) {
+            durationRemoveOrAddAdapter = new DurationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDuration, "D");
+            rc_duration.setAdapter(durationRemoveOrAddAdapter);
+            spinnerForDuration.closeSpinerDialog();
+            arrayListDuration.add(type);
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayListDuration);
+//            arrayListDuration.clear();
+//            arrayListDuration.addAll(hs);
+            if (arrayListDuration.size() > 0) {
+                tv_duration_for.setVisibility(View.GONE);
+                rc_duration.setVisibility(View.VISIBLE);
+            } else {
+                rc_duration.setVisibility(View.GONE);
+                tv_duration_for.setVisibility(View.VISIBLE);
+            }
+            durationRemoveOrAddAdapter.notifyDataSetChanged();
+            onAdviseShow();
+        }
+    };
+
+
+    ///////////Duration/////
+    ///////Advise////////////
+    private AdviseInterface adviseInterface = new AdviseInterface() {
+        @Override
+        public void postion(int position, String Type) {
+            adviseRemoveOrAddAdapter = new AdviseRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListAdvise, "D");
+            rc_advise.setAdapter(adviseRemoveOrAddAdapter);
+            spinnerForAdvise.closeSpinerDialog();
+            arrayListAdvise.add(adviseArrayList.get(position));
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayListAdvise);
+//            arrayListAdvise.clear();
+//            arrayListAdvise.addAll(hs);
+            if (arrayListAdvise.size() > 0) {
+                tv_advise_for.setVisibility(View.GONE);
+                rc_advise.setVisibility(View.VISIBLE);
+            } else {
+                rc_advise.setVisibility(View.GONE);
+                tv_advise_for.setVisibility(View.VISIBLE);
+            }
+            adviseRemoveOrAddAdapter.notifyDataSetChanged();
+        }
+    };
+
+    private AdviceTypeInterface adviceTypeInterface = new AdviceTypeInterface() {
+        @Override
+        public void add(String type) {
+            adviseRemoveOrAddAdapter = new AdviseRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListAdvise, "D");
+            rc_duration.setAdapter(adviseRemoveOrAddAdapter);
+            spinnerForAdvise.closeSpinerDialog();
+            arrayListAdvise.add(type);
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayListAdvise);
+//            arrayListAdvise.clear();
+//            arrayListAdvise.addAll(hs);
+            if (arrayListDuration.size() > 0) {
+                tv_advise_for.setVisibility(View.GONE);
+                rc_advise.setVisibility(View.VISIBLE);
+            } else {
+                rc_advise.setVisibility(View.GONE);
+                tv_advise_for.setVisibility(View.VISIBLE);
+            }
+            adviseRemoveOrAddAdapter.notifyDataSetChanged();
+        }
+    };
+
     private void loadData() {
-        progress_bar.setVisibility(View.VISIBLE);
+
         compositeDisposable.add(mService.getInvestigationList("PATH,RAD").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<InvestigationListResponses>() {
             @Override
             public void accept(InvestigationListResponses investigationListResponses) throws Exception {
 
-                for (Investigation investigation :investigationListResponses.data_list){
+                for (Investigation investigation : investigationListResponses.data_list) {
                     investigationArrayList.add(investigation.item_name);
                 }
-                progress_bar.setVisibility(View.GONE);
+
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.e("study", "study" + throwable.getMessage());
-                progress_bar.setVisibility(View.GONE);
+
             }
         }));
     }
+
     private void loadDiagnosisData() {
-        progress_bar.setVisibility(View.VISIBLE);
+
         compositeDisposable.add(mService.getDiagnosisList("DIAGNOSIS").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<DiagnosisListReponses>() {
             @Override
             public void accept(DiagnosisListReponses diagnosisListReponses) throws Exception {
 
-                for (Diagnosis diagnosis :diagnosisListReponses.data_list){
+                for (Diagnosis diagnosis : diagnosisListReponses.data_list) {
                     diagnosisArrayList.add(diagnosis.lookup_data_name);
                 }
-                progress_bar.setVisibility(View.GONE);
+
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.e("study", "study" + throwable.getMessage());
-                progress_bar.setVisibility(View.GONE);
+
             }
         }));
     }
+
+    private void loadDoseData() {
+
+        compositeDisposable.add(mService.getDiagnosisList("DOSE").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<DiagnosisListReponses>() {
+            @Override
+            public void accept(DiagnosisListReponses diagnosisListReponses) throws Exception {
+
+                for (Diagnosis diagnosis : diagnosisListReponses.data_list) {
+                    doseArrayList.add(diagnosis.lookup_data_name);
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e("study", "study" + throwable.getMessage());
+
+            }
+        }));
+    }
+
+    private void loadDurationData() {
+
+        compositeDisposable.add(mService.getDiagnosisList("DURMU").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<DiagnosisListReponses>() {
+            @Override
+            public void accept(DiagnosisListReponses diagnosisListReponses) throws Exception {
+
+                for (Diagnosis diagnosis : diagnosisListReponses.data_list) {
+                    durationArrayList.add(diagnosis.lookup_data_name);
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e("study", "study" + throwable.getMessage());
+
+            }
+        }));
+    }
+
+    private void loadAdviseData() {
+
+        compositeDisposable.add(mService.getDiagnosisList("ADVICE").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<DiagnosisListReponses>() {
+            @Override
+            public void accept(DiagnosisListReponses diagnosisListReponses) throws Exception {
+
+                for (Diagnosis diagnosis : diagnosisListReponses.data_list) {
+                    adviseArrayList.add(diagnosis.lookup_data_name);
+                }
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e("study", "study" + throwable.getMessage());
+
+            }
+        }));
+    }
+
     private void loadMedicationData() {
-        progress_bar.setVisibility(View.VISIBLE);
+
         compositeDisposable.add(mService.getMedicationList("MED").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<MedicationListResponses>() {
             @Override
             public void accept(MedicationListResponses medicationListResponses) throws Exception {
 
-                for (Medication medication :medicationListResponses.data_list){
+                for (Medication medication : medicationListResponses.data_list) {
                     medicationArrayList.add(medication.item_name);
                 }
-                progress_bar.setVisibility(View.GONE);
+
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
                 Log.e("study", "study" + throwable.getMessage());
-                progress_bar.setVisibility(View.GONE);
+
             }
         }));
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -351,5 +725,16 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         compositeDisposable.clear();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        arrayList.clear();
+        arrayListDignosis.clear();
+        arrayListMedication.clear();
+        arrayListDuration.clear();
+        arrayListDose.clear();
+        arrayListAdvise.clear();
     }
 }
