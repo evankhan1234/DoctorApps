@@ -11,46 +11,44 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nextgenit.doctor.Filterable.SpinnerDose;
-import com.nextgenit.doctor.Filterable.SpinnerDuration;
+import com.nextgenit.doctor.Filterable.SpinnerInstruction;
 import com.nextgenit.doctor.Interface.DoseInterface;
-import com.nextgenit.doctor.Interface.DurationInterface;
+import com.nextgenit.doctor.Interface.InstructionInterface;
 import com.nextgenit.doctor.R;
 
 import java.util.List;
 
-public class DurationAdapter extends RecyclerView.Adapter<DurationAdapter.PlaceTagListiewHolder> implements Filterable {
+public class InstructionAdapter extends RecyclerView.Adapter<InstructionAdapter.PlaceTagListiewHolder> implements Filterable {
 
 
-    SpinnerDuration filter;
+    SpinnerInstruction filter;
     private Activity mActivity = null;
     public List<String> messageEntities;
-    DurationInterface bookItemInterfaces;
+    InstructionInterface bookItemInterfaces;
     String types;
-    String quantity;
 
 
-    public DurationAdapter(Activity activity, List<String> messageEntitie, DurationInterface bookItemInterface,String type,String quantity) {
+    public InstructionAdapter(Activity activity, List<String> messageEntitie, InstructionInterface bookItemInterface,String type) {
         mActivity = activity;
         this.messageEntities = messageEntitie;
         this.bookItemInterfaces = bookItemInterface;
         this.types = type;
-        this.quantity = quantity;
 
 
     }
 
 
     @Override
-    public DurationAdapter.PlaceTagListiewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public InstructionAdapter.PlaceTagListiewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_investigation_item, null);
 
-        return new DurationAdapter.PlaceTagListiewHolder(view);
+        return new InstructionAdapter.PlaceTagListiewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final DurationAdapter.PlaceTagListiewHolder holder, final int position) {
+    public void onBindViewHolder(final InstructionAdapter.PlaceTagListiewHolder holder, final int position) {
         // UserList messageEntitie= messageEntities.get(position);
-        holder.text1.setText(quantity+" "+messageEntities.get(position));
+        holder.text1.setText(messageEntities.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +68,7 @@ public class DurationAdapter extends RecyclerView.Adapter<DurationAdapter.PlaceT
     @Override
     public Filter getFilter() {
         if (filter == null) {
-            filter = new SpinnerDuration(messageEntities, this);
+            filter = new SpinnerInstruction(messageEntities, this);
         }
         return filter;
     }

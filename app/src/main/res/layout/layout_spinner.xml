@@ -26,8 +26,17 @@
             android:layout_height="wrap_content"
             android:gravity="center|left"
             android:orientation="horizontal">
-
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/quantity"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:hint="Quantity"
+                android:layout_marginLeft="5dp"
+                android:background="#ffffff"
+                android:inputType="number" />
             <ImageView
+                android:layout_marginLeft="5dp"
                 android:id="@+id/searchIcon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
