@@ -18,16 +18,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nextgenit.doctor.Adapter.DoseAdapter;
-import com.nextgenit.doctor.Adapter.DurationAdapter;
+import com.nextgenit.doctor.Adapter.InstructionAdapter;
 import com.nextgenit.doctor.Interface.DoseInterface;
 import com.nextgenit.doctor.Interface.DoseTypeInterface;
-import com.nextgenit.doctor.Interface.DurationInterface;
-import com.nextgenit.doctor.Interface.DurationTypeInterface;
+import com.nextgenit.doctor.Interface.InstructionInterface;
+import com.nextgenit.doctor.Interface.InstructionTypeInterface;
 import com.nextgenit.doctor.R;
 
 import java.util.List;
 
-public class SpinnerForDuration implements Filterable {
+public class SpinnerForInstruction implements Filterable {
     List<String> items;
     Activity context;
     String dTitle, closeTitle = "Close";
@@ -36,20 +36,20 @@ public class SpinnerForDuration implements Filterable {
     int style;
     boolean cancellable = false;
     boolean showKeyboard = false;
-    SpinnerDuration filter;
+    SpinnerInstruction filter;
     ArrayAdapter adapter;
-    DurationAdapter mAdapters;
+    InstructionAdapter mAdapters;
     String values;
     String types;
-     EditText searchBox;
-    DurationTypeInterface investigationTypeInterface;
+    InstructionInterface uccMemberClickListener;
+    InstructionTypeInterface investigationTypeInterface;
 
-    public SpinnerForDuration(Activity activity, List<String> items, String dialogTitle,String type,DurationTypeInterface investigationTypeInterfaces) {
+    public SpinnerForInstruction(Activity activity, List<String> items, String dialogTitle, InstructionInterface uccMemberClickListeners,String type,InstructionTypeInterface investigationTypeInterfaces) {
         this.items = items;
         this.context = activity;
         this.dTitle = dialogTitle;
         this.types = type;
-
+        this.uccMemberClickListener = uccMemberClickListeners;
         this.investigationTypeInterface = investigationTypeInterfaces;
     }
 
@@ -65,9 +65,7 @@ public class SpinnerForDuration implements Filterable {
         rippleViewClose.setText(closeTitle);
         title.setText(dTitle);
         // final ListView listView = (ListView) v.findViewById(R.id.list);
-         searchBox = (EditText) v.findViewById(R.id.searchBox);
-        final EditText  quantity = (EditText) v.findViewById(R.id.quantity);
-        quantity.setVisibility(View.VISIBLE);
+        final EditText searchBox = (EditText) v.findViewById(R.id.searchBox);
         if (isShowKeyboard()) {
             showKeyboard(searchBox);
         }
@@ -80,7 +78,7 @@ public class SpinnerForDuration implements Filterable {
         LinearLayoutManager lm = new LinearLayoutManager(context);
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         rcl_this_customer_list.setLayoutManager(lm);
-        mAdapters = new DurationAdapter(context, items, uccMemberClickListener,types,quantity.getText().toString());
+        mAdapters = new InstructionAdapter(context, items, uccMemberClickListener,types);
 
         rcl_this_customer_list.setAdapter(mAdapters);
 
@@ -120,7 +118,7 @@ public class SpinnerForDuration implements Filterable {
             public void onClick(View v) {
                 String s = searchBox.getText().toString();
                 if (!s.equals("")){
-                    investigationTypeInterface.add(quantity.getText().toString()+" "+s);
+                    investigationTypeInterface.add(s);
                 }
 
             }
@@ -177,18 +175,12 @@ public class SpinnerForDuration implements Filterable {
     @Override
     public Filter getFilter() {
         if (filter == null) {
-            filter = new SpinnerDuration(items, mAdapters);
+            filter = new SpinnerInstruction(items, mAdapters);
             Toast.makeText(context, "xvx", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "xvx", Toast.LENGTH_SHORT).show();
         }
         return filter;
     }
-    DurationInterface uccMemberClickListener= new DurationInterface() {
-        @Override
-        public void postion(int position, String Type) {
-            searchBox.setText(items.get(position));
-        }
-    };
 }
 
