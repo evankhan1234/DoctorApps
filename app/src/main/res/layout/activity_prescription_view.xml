@@ -1,0 +1,316 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rlt_root"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    android:background="#fafafa">
+
+    <ScrollView
+        android:layout_marginBottom="60dp"
+        android:id="@+id/scrollable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fafafa"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="#fafafa"
+            android:layout_height="wrap_content"
+            >
+
+
+
+            <LinearLayout
+                android:id="@+id/layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/btn_header_back_"
+
+                android:background="#fafafa"
+                android:fitsSystemWindows="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+
+                        android:id="@+id/img_close"
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/close_cross"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"/>
+                    <ImageView
+                        android:id="@+id/img_log_out"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/logout"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+                </RelativeLayout>
+
+
+
+
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/logo"
+                    android:visibility="visible"
+                    />
+
+                <TextView
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold"
+                    android:textSize="17sp"
+                    android:text="Patient Details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <View
+                    android:layout_marginTop="5dp"
+                    android:background="#B3A1A1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_patient_name"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:text="Ajom Khan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_patient_details"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        android:text="Age-34,Male,Wt-60kg,Ht-5.8 inch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <View
+                    android:layout_marginTop="5dp"
+                    android:background="#B3A1A1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"/>
+                
+                <LinearLayout
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <LinearLayout
+
+                        android:layout_width="210dp"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"
+                            android:textStyle="bold"
+                            android:textSize="17sp"
+                            android:text="Diagnosis"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+
+                        <View
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#B3A1A1"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"/>
+                        <androidx.recyclerview.widget.RecyclerView
+
+                            android:layout_marginRight="5dp"
+                            android:nestedScrollingEnabled="false"
+                            android:id="@+id/rc_rx_diagnosis"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0px"/>
+
+
+                        <TextView
+                            android:layout_marginTop="30dp"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"
+                            android:textStyle="bold"
+                            android:textSize="17sp"
+                            android:text="Radiology and Pathology"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <View
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#B3A1A1"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"/>
+                        <androidx.recyclerview.widget.RecyclerView
+
+                            android:layout_marginRight="5dp"
+                            android:nestedScrollingEnabled="false"
+                            android:id="@+id/rc_investigation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0px"/>
+                        <TextView
+                            android:layout_marginTop="30dp"
+                            android:textColor="@color/black"
+                            android:layout_marginLeft="10dp"
+                            android:textStyle="bold"
+                            android:textSize="17sp"
+                            android:text="Advise"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
+                        <View
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="5dp"
+                            android:background="#B3A1A1"
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"/>
+                        <androidx.recyclerview.widget.RecyclerView
+
+                            android:layout_marginRight="5dp"
+                            android:nestedScrollingEnabled="false"
+                            android:id="@+id/rc_advise"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0px"/>
+                    </LinearLayout>
+                    <View
+                        android:background="#B3A1A1"
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"/>
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="match_parent">
+                        <androidx.recyclerview.widget.RecyclerView
+
+                            android:layout_marginRight="25dp"
+                            android:nestedScrollingEnabled="false"
+                            android:id="@+id/rc_rx_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0px"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:background="@android:color/transparent"
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:visibility="gone" />
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:text="Powerd By"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+
+                android:textColor="@color/black"
+                android:layout_marginLeft="10dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="Nextgen IT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginRight="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <View
+
+                android:layout_marginTop="5dp"
+                android:background="#B3A1A1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_marginTop="8dp"
+
+                android:textColor="@color/black"
+
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:text="Dr.Abdullah Ali"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+
+                android:textColor="@color/black"
+
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="MBBS,FCPS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

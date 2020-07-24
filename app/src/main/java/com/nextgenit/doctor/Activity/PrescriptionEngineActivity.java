@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nextgenit.doctor.Adapter.AdviseRemoveOrAddAdapter;
 import com.nextgenit.doctor.Adapter.DiagnosisRemoveOrAddAdapter;
@@ -244,12 +246,29 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         btn_prescription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                arrayList.clear();
-                arrayListDignosis.clear();
-                arrayListMedication.clear();
-                arrayListDuration.clear();
-                arrayListDose.clear();
-                arrayListAdvise.clear();
+
+                if (arrayListMedication.size()==arrayListDose.size() && arrayListMedication.size()==arrayListInstructon.size()){
+                    Intent intent = new Intent(PrescriptionEngineActivity.this, PrescriptionViewActivity.class);
+                    intent.putStringArrayListExtra("advise", arrayListAdvise);
+                    intent.putStringArrayListExtra("dose", arrayListDose);
+                    intent.putStringArrayListExtra("instruction", arrayListInstructon);
+                    intent.putStringArrayListExtra("diagnosis", arrayListDignosis);
+                    intent.putStringArrayListExtra("investigation", arrayList);
+                    intent.putStringArrayListExtra("medication", arrayListMedication);
+                    intent.putExtra("patient", patientList);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(PrescriptionEngineActivity.this, "Please Select Dose and Instruction", Toast.LENGTH_SHORT).show();
+                }
+
+//                arrayList.clear();
+//                arrayListDignosis.clear();
+//                arrayListMedication.clear();
+//                arrayListDuration.clear();
+//                arrayListDose.clear();
+//                arrayListAdvise.clear();
+//                arrayListInstructon.clear();
             }
         });
     }
@@ -662,7 +681,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         @Override
         public void add(String type) {
             adviseRemoveOrAddAdapter = new AdviseRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListAdvise, "D");
-            rc_duration.setAdapter(adviseRemoveOrAddAdapter);
+            rc_advise.setAdapter(adviseRemoveOrAddAdapter);
             spinnerForAdvise.closeSpinerDialog();
             arrayListAdvise.add(type);
 //            HashSet hs = new HashSet();
