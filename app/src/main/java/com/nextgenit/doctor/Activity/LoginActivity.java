@@ -131,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                             progress_bar.setVisibility(View.GONE);
                             if (loginEntity.status.equals("success")) {
                                 SharedPreferenceUtil.saveShared(LoginActivity.this, SharedPreferenceUtil.TYPE_USER_ID, loginEntity.user.user_no_pk + "");
+                                SharedPreferenceUtil.saveShared(LoginActivity.this, SharedPreferenceUtil.TYPE_USER_NAME, loginEntity.user.user_fullname + "");
                                 Toast.makeText(LoginActivity.this, "Successfully Login", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this,DashboardActivity.class));
                                 finish();
