@@ -52,7 +52,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Pl
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bookItemInterfaces.postion(position,types);
+                bookItemInterfaces.postion(messageEntities.get(position),types);
             }
         });
 

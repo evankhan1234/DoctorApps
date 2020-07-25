@@ -186,8 +186,8 @@ public class SpinnerForDuration implements Filterable {
     }
     DurationInterface uccMemberClickListener= new DurationInterface() {
         @Override
-        public void postion(int position, String Type) {
-            searchBox.setText(items.get(position));
+        public void postion(String position, String Type) {
+            searchBox.setText(position);
         }
     };
 }

@@ -281,11 +281,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
     private InvestigationInterface investigationInterface = new InvestigationInterface() {
         @Override
-        public void postion(int position, String Type) {
+        public void postion(String position, String Type) {
             investigationRemoveOrAddAdapter = new InvestigationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayList, "D");
             rc_investigation.setAdapter(investigationRemoveOrAddAdapter);
             spinnerForInvestigation.closeSpinerDialog();
-            arrayList.add(investigationArrayList.get(position));
+            arrayList.add(position);
             HashSet hs = new HashSet();
             hs.addAll(arrayList);
             arrayList.clear();
@@ -302,11 +302,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     };
     private DiagnosisInterface diagnosisInterface = new DiagnosisInterface() {
         @Override
-        public void postion(int position, String Type) {
+        public void postion(String position, String Type) {
             diagnosisRemoveOrAddAdapter = new DiagnosisRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDignosis, "D");
             rc_diagnosis.setAdapter(diagnosisRemoveOrAddAdapter);
             spinnerForDiagnosis.closeSpinerDialog();
-            arrayListDignosis.add(diagnosisArrayList.get(position));
+            arrayListDignosis.add(position);
             HashSet hs = new HashSet();
             hs.addAll(arrayListDignosis);
             arrayListDignosis.clear();
@@ -443,11 +443,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     };
     private MedicationInterface medicationInterface = new MedicationInterface() {
         @Override
-        public void postion(int position, String Type) {
+        public void postion(String position, String Type) {
             medicationRemoveOrAddAdapter = new MedicationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListMedication, "D");
             rc_medication.setAdapter(medicationRemoveOrAddAdapter);
             spinnerForMedication.closeSpinerDialog();
-            arrayListMedication.add(medicationArrayList.get(position));
+            arrayListMedication.add(position);
             HashSet hs = new HashSet();
             hs.addAll(arrayListMedication);
             arrayListMedication.clear();
@@ -517,11 +517,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
     private InstructionInterface instructionInterface= new InstructionInterface() {
         @Override
-        public void postion(int position, String Type) {
+        public void postion(String position, String Type) {
             instructionRemoveOrAddAdapter = new InstructionRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListInstructon, "D");
             rc_instruction.setAdapter(instructionRemoveOrAddAdapter);
             spinnerForInstruction.closeSpinerDialog();
-            arrayListInstructon.add(instructionArrayList.get(position));
+            arrayListInstructon.add(position);
             if (arrayListInstructon.size() > 0) {
                 tv_instruction_for.setVisibility(View.GONE);
                 rc_instruction.setVisibility(View.VISIBLE);
@@ -559,11 +559,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     ///////Dose////////////
     private DoseInterface doseInterface = new DoseInterface() {
         @Override
-        public void postion(int position, String Type) {
+        public void postion(String position, String Type) {
             doseRemoveOrAddAdapter = new DoseRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDose, "D");
             rc_dose.setAdapter(doseRemoveOrAddAdapter);
             spinnerForDose.closeSpinerDialog();
-            arrayListDose.add(doseArrayList.get(position));
+            arrayListDose.add(position);
 //            HashSet hs = new HashSet();
 //            hs.addAll(arrayListDose);
 //            arrayListDose.clear();
@@ -608,11 +608,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     ///////Duration////////////
     private DurationInterface durationInterface = new DurationInterface() {
         @Override
-        public void postion(int position, String Type) {
+        public void postion(String position, String Type) {
             durationRemoveOrAddAdapter = new DurationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDuration, "D");
             rc_duration.setAdapter(durationRemoveOrAddAdapter);
             spinnerForDuration.closeSpinerDialog();
-            arrayListDuration.add(durationArrayList.get(position));
+            arrayListDuration.add(position);
 //            HashSet hs = new HashSet();
 //            hs.addAll(arrayListDuration);
 //            arrayListDuration.clear();
@@ -657,11 +657,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     ///////Advise////////////
     private AdviseInterface adviseInterface = new AdviseInterface() {
         @Override
-        public void postion(int position, String Type) {
+        public void postion(String position, String Type) {
             adviseRemoveOrAddAdapter = new AdviseRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListAdvise, "D");
             rc_advise.setAdapter(adviseRemoveOrAddAdapter);
             spinnerForAdvise.closeSpinerDialog();
-            arrayListAdvise.add(adviseArrayList.get(position));
+            arrayListAdvise.add(position);
 //            HashSet hs = new HashSet();
 //            hs.addAll(arrayListAdvise);
 //            arrayListAdvise.clear();
