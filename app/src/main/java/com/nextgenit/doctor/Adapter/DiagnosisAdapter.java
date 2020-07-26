@@ -51,7 +51,7 @@ public class DiagnosisAdapter extends RecyclerView.Adapter<DiagnosisAdapter.Plac
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bookItemInterfaces.postion(position,types);
+                bookItemInterfaces.postion(messageEntities.get(position),types);
             }
         });
 

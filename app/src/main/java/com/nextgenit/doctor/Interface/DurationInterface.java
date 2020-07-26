@@ -1,6 +1,6 @@
 package com.nextgenit.doctor.Interface;
 
 public interface DurationInterface {
-    void postion(int position,String Type);
+    void postion(String position,String Type);
 
 }
