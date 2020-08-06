@@ -7,11 +7,13 @@ public class SharedPreferenceUtil {
     private static final String mSharedName = "premo_prefs";
     public static final String TYPE_TOKEN = "token";
     public static final String TYPE_USER_ID = "userid";
-    public static final String   USER_ID = "user";
+    public static final String  USER_ID = "user";
+    public static final String  PHARMACY_ID = "pharmacy_id";
     public static final String TYPE_USER_NAME = "username";
     public static final String TYPE_ADMIN = "username";
     public static final String USER_PIC = "pic";
     public static final String USER_EMAIL = "email";
+    public static final String DATA = "data";
     public static final String USER_ROLE = "role";
     public static final String SYNC= "sync";
     public static final String LANG= "lang";
@@ -46,8 +48,8 @@ public class SharedPreferenceUtil {
         String val = getShared(c, USER_PIC);
         return val;
     }
-    public static String getLanguage(Context c) {
-        String val = getShared(c, LANG);
+    public static String getData(Context c) {
+        String val = getShared(c, DATA);
         return val;
     }
     public static String getUserID(Context c) {
@@ -57,8 +59,8 @@ public class SharedPreferenceUtil {
         String val = getShared(c, TYPE_USER_NAME);
         return val;
     }
-    public static String getEmail(Context c) {
-        String val = getShared(c, USER_EMAIL);
+    public static String getPharmacyId(Context c) {
+        String val = getShared(c, PHARMACY_ID);
         return val;
     }
     public static String getAdmin(Context c) {

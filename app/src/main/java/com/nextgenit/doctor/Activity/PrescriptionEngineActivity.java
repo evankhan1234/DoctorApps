@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nextgenit.doctor.Adapter.AdviseRemoveOrAddAdapter;
 import com.nextgenit.doctor.Adapter.DiagnosisRemoveOrAddAdapter;
 import com.nextgenit.doctor.Adapter.DoseRemoveOrAddAdapter;
@@ -45,6 +46,8 @@ import com.nextgenit.doctor.Interface.InvestigationInterface;
 import com.nextgenit.doctor.Interface.InvestigationTypeInterface;
 import com.nextgenit.doctor.Interface.MedicationInterface;
 import com.nextgenit.doctor.Interface.MedicationTypeInterface;
+import com.nextgenit.doctor.LocalModel.DiagnosisData;
+import com.nextgenit.doctor.LocalModel.PrescriptionModel;
 import com.nextgenit.doctor.Network.IRetrofitApi;
 import com.nextgenit.doctor.NetworkModel.Diagnosis;
 import com.nextgenit.doctor.NetworkModel.DiagnosisListReponses;
@@ -57,9 +60,12 @@ import com.nextgenit.doctor.NetworkModel.Pharmacy;
 import com.nextgenit.doctor.NetworkModel.PharmacyListResponses;
 import com.nextgenit.doctor.R;
 import com.nextgenit.doctor.Utils.Common;
+import com.nextgenit.doctor.Utils.SharedPreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -81,7 +87,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     static TextView tv_dose_for;
     static TextView tv_duration_for;
     static TextView tv_advise_for;
-    static TextView tv_instruction_for  ;
+    static TextView tv_instruction_for;
     SpinnerForInvestigation spinnerForInvestigation;
     SpinnerForDiagnosis spinnerForDiagnosis;
     SpinnerForMedication spinnerForMedication;
@@ -92,6 +98,8 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IRetrofitApi mService;
     ProgressBar progress_bar;
+    ArrayList<Diagnosis> digArrayList;
+    ArrayList<Investigation> invArrayList;
     ArrayList<String> investigationArrayList = new ArrayList<>();
     ArrayList<String> diagnosisArrayList = new ArrayList<>();
     ArrayList<String> medicationArrayList = new ArrayList<>();
@@ -107,11 +115,15 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     InstructionRemoveOrAddAdapter instructionRemoveOrAddAdapter;
     AdviseRemoveOrAddAdapter adviseRemoveOrAddAdapter;
     static ArrayList<String> arrayList = new ArrayList<>();
+    static ArrayList<String> arrayListSecond = new ArrayList<>();
     static ArrayList<String> arrayListDignosis = new ArrayList<>();
+    static ArrayList<String> arrayListDignosisSecond = new ArrayList<>();
     static ArrayList<String> arrayListMedication = new ArrayList<>();
+    static ArrayList<String> arrayListMedicationSecond = new ArrayList<>();
     static ArrayList<String> arrayListDose = new ArrayList<>();
     static ArrayList<String> arrayListDuration = new ArrayList<>();
-    static ArrayList<String> arrayListInstructon= new ArrayList<>();
+    static ArrayList<String> arrayListDurationSecond = new ArrayList<>();
+    static ArrayList<String> arrayListInstructon = new ArrayList<>();
     static ArrayList<String> arrayListAdvise = new ArrayList<>();
     static RecyclerView rc_investigation;
     static RecyclerView rc_diagnosis;
@@ -149,7 +161,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         tv_investigation_for = findViewById(R.id.tv_investigation_for);
         linear_diagnosis = findViewById(R.id.linear_diagnosis);
         btn_prescription = findViewById(R.id.btn_prescription);
-        tv_instruction_for   = findViewById(R.id.tv_instruction_for  );
+        tv_instruction_for = findViewById(R.id.tv_instruction_for);
         LinearLayoutManager lm1 = new LinearLayoutManager(this);
         LinearLayoutManager lm2 = new LinearLayoutManager(this);
         LinearLayoutManager lm3 = new LinearLayoutManager(this);
@@ -247,7 +259,9 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 if (arrayListMedication.size()==arrayListDose.size() && arrayListMedication.size()==arrayListInstructon.size()){
+
                     Intent intent = new Intent(PrescriptionEngineActivity.this, PrescriptionViewActivity.class);
                     intent.putStringArrayListExtra("advise", arrayListAdvise);
                     intent.putStringArrayListExtra("dose", arrayListDose);
@@ -256,7 +270,9 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
                     intent.putStringArrayListExtra("investigation", arrayList);
                     intent.putStringArrayListExtra("medication", arrayListMedication);
                     intent.putExtra("patient", patientList);
+                    //intent.putExtra("data", showFor());
                     startActivity(intent);
+                    showFor();
                 }
                 else{
                     Toast.makeText(PrescriptionEngineActivity.this, "Please Select Dose and Instruction", Toast.LENGTH_SHORT).show();
@@ -273,12 +289,174 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         });
     }
 
+    private void showFor(){
+        int value = 0;
+        int valueFor = 0;
+        PrescriptionModel prescriptionModel = new PrescriptionModel();
+        prescriptionModel.appointment_id = 0;
+        prescriptionModel.prescription_id = 0;
+        prescriptionModel.prs_state = "NEW";
+        prescriptionModel.created_by = Integer.parseInt(SharedPreferenceUtil.getUserID(PrescriptionEngineActivity.this));
+        prescriptionModel.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+
+        ArrayList<PrescriptionModel.Details> diagnosisDataArrayList = new ArrayList<>();
+        ArrayList<PrescriptionModel.Medicine> medicineDataArrayList = new ArrayList<>();
+
+        ArrayList<String> arrayListDiagnosisDuplicate =arrayListDignosis;
+        ArrayList<String> arrayListInvestigation =arrayList;
+        for (Diagnosis diagnosis : digArrayList) {
+            for (int i = 0; i < arrayListDignosis.size(); i++) {
+                if (arrayListDignosis.get(i).equals(diagnosis.lookup_data_name)) {
+                    value = value + 1;
+                    PrescriptionModel.Details diagnosisData = new PrescriptionModel.Details();
+                    diagnosisData.id = diagnosis.lookup_data_id;
+                    diagnosisData.lookup_type = diagnosis.lookup_code;
+                    diagnosisData.lookup_name = diagnosis.lookup_data_name;
+                    diagnosisData.lookup_id = diagnosis.lookup_id;
+                    diagnosisData.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+                    diagnosisData.sl = value;
+                    diagnosisDataArrayList.add(diagnosisData);
+                    arrayListDiagnosisDuplicate.remove(i);
+                }
+            }
+
+        }
+        for (Investigation investigation : invArrayList) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                if (arrayList.get(i).equals(investigation.item_name)) {
+                    value = value + 1;
+                    PrescriptionModel.Details diagnosisData = new PrescriptionModel.Details();
+                    diagnosisData.id = Integer.parseInt(investigation.item_id);
+                    diagnosisData.lookup_type = investigation.item_type;
+                    diagnosisData.lookup_name = investigation.item_name;
+                    diagnosisData.lookup_id = Integer.parseInt(investigation.item_id);
+                    diagnosisData.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+                    diagnosisData.sl = value;
+                    diagnosisDataArrayList.add(diagnosisData);
+                    arrayListInvestigation.remove(i);
+                }
+            }
+        }
+
+        ArrayList<String> arrayListMedDuplicate =arrayListMedication;
+        ArrayList<String> arrayListMedDoseDuplicate = arrayListDose;
+        ArrayList<String> arrayListMedDurationDuplicate = arrayListDuration;
+        ArrayList<String> arrayListMedDurationSecondDuplicate = arrayListDurationSecond;
+        ArrayList<String> arrayListMedInstructionDuplicate = arrayListInstructon;
+        for (Medication medication : medArraylist) {
+            for (int i = 0; i < arrayListMedication.size(); i++) {
+
+                PrescriptionModel.Medicine medicineData = new PrescriptionModel.Medicine();
+                if (arrayListMedication.get(i).equals(medication.item_name)) {
+                    valueFor = valueFor + 1;
+                    medicineData.id = Integer.parseInt(medication.item_id);
+                    medicineData.med_name = medication.item_name;
+                    medicineData.med_dose = arrayListDose.get(i);
+                    medicineData.med_duration = arrayListDuration.get(i);
+                    medicineData.med_duration_mu = arrayListDurationSecond.get(i);
+                    medicineData.med_instruction = arrayListInstructon.get(i);
+                    medicineData.med_qnty = 0;
+                    medicineData.sl = valueFor;
+                    medicineDataArrayList.add(medicineData);
+                    arrayListMedDuplicate.remove(i);
+                    arrayListMedDurationDuplicate.remove(i);
+                    arrayListMedDurationSecondDuplicate.remove(i);
+                    arrayListMedDoseDuplicate.remove(i);
+                    arrayListMedInstructionDuplicate.remove(i);
+                }
+
+            }
+        }
+
+
+        for (int i = 0; i < arrayListMedDuplicate.size(); i++) {
+            valueFor = valueFor + 1;
+            PrescriptionModel.Medicine medicineData = new PrescriptionModel.Medicine();
+            medicineData.id = 0;
+            medicineData.med_name = arrayListMedDuplicate.get(i);
+            medicineData.med_dose = arrayListMedDoseDuplicate.get(i);
+            medicineData.med_duration = arrayListMedDurationDuplicate.get(i);
+            medicineData.med_duration_mu = arrayListMedDurationSecondDuplicate.get(i);
+            medicineData.med_instruction = arrayListMedInstructionDuplicate.get(i);
+            medicineData.med_qnty = 0;
+            medicineData.sl = valueFor;
+            medicineDataArrayList.add(medicineData);
+        }
+
+///
+
+
+        for (int i = 0; i < arrayListDiagnosisDuplicate.size(); i++) {
+            value = value + 1;
+            PrescriptionModel.Details diagnosisData = new PrescriptionModel.Details();
+            diagnosisData.id =0;
+            diagnosisData.lookup_type = "DIAGNOSIS";
+            diagnosisData.lookup_name = arrayListDiagnosisDuplicate.get(i);
+            diagnosisData.lookup_id = 0;
+            diagnosisData.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+            diagnosisData.sl = value;
+            diagnosisDataArrayList.add(diagnosisData);
+        }
+
+        for (int i = 0; i < arrayListInvestigation.size(); i++) {
+            value = value + 1;
+            PrescriptionModel.Details diagnosisData = new PrescriptionModel.Details();
+            diagnosisData.id =0;
+            diagnosisData.lookup_type = "PATH";
+            diagnosisData.lookup_name = arrayListInvestigation.get(i);
+            diagnosisData.lookup_id = 0;
+            diagnosisData.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+            diagnosisData.sl = value;
+            diagnosisDataArrayList.add(diagnosisData);
+        }
+
+
+
+        //
+        prescriptionModel.details_data = diagnosisDataArrayList;
+        prescriptionModel.medicine_data = medicineDataArrayList;
+        String s = new Gson().toJson(prescriptionModel);
+        SharedPreferenceUtil.saveShared(PrescriptionEngineActivity.this, SharedPreferenceUtil.DATA, s + "");
+
+
+    }
+    public  ArrayList<String> removeDuplicates(ArrayList<String> list)
+    {
+
+        // Create a new ArrayList
+        ArrayList<String> newList = new ArrayList<String>();
+
+        // Traverse through the first list
+        for (String element : list) {
+
+            // If this element is not present in newList
+            // then add it
+            if (!newList.contains(element)) {
+
+                newList.add(element);
+            }
+        }
+
+        // return the new list
+        return newList;
+    }
     @Override
     protected void onResume() {
         super.onResume();
 
     }
-
+    public String method(String str) {
+        if (str != null && str.length() > 0 && str.charAt(str.length() - 1) == 'x') {
+            str = str.substring(0, str.length() - 1);
+        }
+        return str;
+    }
+    private  String removeLastChar(String str) {
+        return str.substring( 0,str.length() - 1);
+    }
+    private  String getLastChar(String str) {
+        return str.substring( str.length() - 1);
+    }
     private InvestigationInterface investigationInterface = new InvestigationInterface() {
         @Override
         public void postion(String position, String Type) {
@@ -286,10 +464,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_investigation.setAdapter(investigationRemoveOrAddAdapter);
             spinnerForInvestigation.closeSpinerDialog();
             arrayList.add(position);
-            HashSet hs = new HashSet();
-            hs.addAll(arrayList);
-            arrayList.clear();
-            arrayList.addAll(hs);
+            arrayListSecond.add(position+"%");
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayList);
+//            arrayList.clear();
+//            arrayList.addAll(hs);
             if (arrayList.size() > 0) {
                 tv_investigation_for.setVisibility(View.GONE);
                 rc_investigation.setVisibility(View.VISIBLE);
@@ -300,6 +479,8 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             investigationRemoveOrAddAdapter.notifyDataSetChanged();
         }
     };
+
+
     private DiagnosisInterface diagnosisInterface = new DiagnosisInterface() {
         @Override
         public void postion(String position, String Type) {
@@ -307,10 +488,12 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_diagnosis.setAdapter(diagnosisRemoveOrAddAdapter);
             spinnerForDiagnosis.closeSpinerDialog();
             arrayListDignosis.add(position);
-            HashSet hs = new HashSet();
-            hs.addAll(arrayListDignosis);
-            arrayListDignosis.clear();
-            arrayListDignosis.addAll(hs);
+            arrayListDignosisSecond.add(position+"%");
+
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayListDignosis);
+//            arrayListDignosis.clear();
+//            arrayListDignosis.addAll(hs);
             if (arrayListDignosis.size() > 0) {
                 tv_diagnosis_for.setVisibility(View.GONE);
                 rc_diagnosis.setVisibility(View.VISIBLE);
@@ -328,10 +511,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_diagnosis.setAdapter(diagnosisRemoveOrAddAdapter);
             spinnerForDiagnosis.closeSpinerDialog();
             arrayListDignosis.add(type);
-            HashSet hs = new HashSet();
-            hs.addAll(arrayListDignosis);
-            arrayListDignosis.clear();
-            arrayListDignosis.addAll(hs);
+            arrayListDignosisSecond.add(type);
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayListDignosis);
+//            arrayListDignosis.clear();
+//            arrayListDignosis.addAll(hs);
             if (arrayListDignosis.size() > 0) {
                 tv_diagnosis_for.setVisibility(View.GONE);
                 rc_diagnosis.setVisibility(View.VISIBLE);
@@ -397,6 +581,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         }
 
     }
+
     public static void InstructionShow() {
         if (arrayListInstructon.size() > 0) {
             tv_instruction_for.setVisibility(View.GONE);
@@ -426,10 +611,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_investigation.setAdapter(investigationRemoveOrAddAdapter);
             spinnerForInvestigation.closeSpinerDialog();
             arrayList.add(type);
-            HashSet hs = new HashSet();
-            hs.addAll(arrayList);
-            arrayList.clear();
-            arrayList.addAll(hs);
+            arrayListSecond.add(type);
+//            HashSet hs = new HashSet();
+//            hs.addAll(arrayList);
+//            arrayList.clear();
+//            arrayList.addAll(hs);
             if (arrayList.size() > 0) {
                 tv_investigation_for.setVisibility(View.GONE);
                 rc_investigation.setVisibility(View.VISIBLE);
@@ -448,10 +634,15 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_medication.setAdapter(medicationRemoveOrAddAdapter);
             spinnerForMedication.closeSpinerDialog();
             arrayListMedication.add(position);
-            HashSet hs = new HashSet();
-            hs.addAll(arrayListMedication);
-            arrayListMedication.clear();
-            arrayListMedication.addAll(hs);
+            arrayListMedicationSecond.add(position+"%");
+//            HashSet hs = new HashSet();
+//            HashSet hs1 = new HashSet();
+//            hs.addAll(arrayListMedication);
+//            hs1.addAll(arrayListMedicationSecond);
+//            arrayListMedication.clear();
+//            arrayListMedicationSecond.clear();
+//            arrayListMedication.addAll(hs);
+//            arrayListMedicationSecond.addAll(hs1);
             if (arrayListMedication.size() > 0) {
                 tv_medication_for.setVisibility(View.GONE);
                 rc_medication.setVisibility(View.VISIBLE);
@@ -472,10 +663,15 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_medication.setAdapter(medicationRemoveOrAddAdapter);
             spinnerForMedication.closeSpinerDialog();
             arrayListMedication.add(type);
-            HashSet hs = new HashSet();
-            hs.addAll(arrayListMedication);
-            arrayListMedication.clear();
-            arrayListMedication.addAll(hs);
+            arrayListMedicationSecond.add(type);
+//            HashSet hs = new HashSet();
+//            HashSet hs1 = new HashSet();
+//            hs.addAll(arrayListMedication);
+//            hs1.addAll(arrayListMedicationSecond);
+//            arrayListMedicationSecond.clear();
+//            arrayListMedication.clear();
+//            arrayListMedication.addAll(hs);
+//            arrayListMedicationSecond.addAll(hs1);
             if (arrayListMedication.size() > 0) {
                 tv_medication_for.setVisibility(View.GONE);
                 rc_medication.setVisibility(View.VISIBLE);
@@ -501,21 +697,23 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
 
     }
+
     private void onInstructionShow() {
 
-        spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface,"D", instructionTypeInterface);
+        spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface);
         spinnerForInstruction.showSpinerDialog();
 
 
     }
-    private void onAdviseShow(){
-        spinnerForAdvise = new SpinnerForAdvise(PrescriptionEngineActivity.this, adviseArrayList, "Select Advise", adviseInterface, "D",adviceTypeInterface);
+
+    private void onAdviseShow() {
+        spinnerForAdvise = new SpinnerForAdvise(PrescriptionEngineActivity.this, adviseArrayList, "Select Advise", adviseInterface, "D", adviceTypeInterface);
         spinnerForAdvise.showSpinerDialog();
     }
     ////Instruction//////
 
 
-    private InstructionInterface instructionInterface= new InstructionInterface() {
+    private InstructionInterface instructionInterface = new InstructionInterface() {
         @Override
         public void postion(String position, String Type) {
             instructionRemoveOrAddAdapter = new InstructionRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListInstructon, "D");
@@ -534,7 +732,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         }
     };
 
-    private InstructionTypeInterface instructionTypeInterface= new InstructionTypeInterface() {
+    private InstructionTypeInterface instructionTypeInterface = new InstructionTypeInterface() {
         @Override
         public void add(String type) {
             instructionRemoveOrAddAdapter = new InstructionRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListInstructon, "D");
@@ -631,11 +829,12 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
     private DurationTypeInterface durationTypeInterface = new DurationTypeInterface() {
         @Override
-        public void add(String type) {
+        public void add(String type,String Duration) {
             durationRemoveOrAddAdapter = new DurationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDuration, "D");
             rc_duration.setAdapter(durationRemoveOrAddAdapter);
             spinnerForDuration.closeSpinerDialog();
             arrayListDuration.add(type);
+            arrayListDurationSecond.add(Duration);
 //            HashSet hs = new HashSet();
 //            hs.addAll(arrayListDuration);
 //            arrayListDuration.clear();
@@ -704,7 +903,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         compositeDisposable.add(mService.getInvestigationList("PATH,RAD").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<InvestigationListResponses>() {
             @Override
             public void accept(InvestigationListResponses investigationListResponses) throws Exception {
-
+                invArrayList = investigationListResponses.data_list;
                 for (Investigation investigation : investigationListResponses.data_list) {
                     investigationArrayList.add(investigation.item_name);
                 }
@@ -719,12 +918,13 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         }));
     }
 
+
     private void loadDiagnosisData() {
 
         compositeDisposable.add(mService.getDiagnosisList("DIAGNOSIS").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<DiagnosisListReponses>() {
             @Override
             public void accept(DiagnosisListReponses diagnosisListReponses) throws Exception {
-
+                digArrayList = diagnosisListReponses.data_list;
                 for (Diagnosis diagnosis : diagnosisListReponses.data_list) {
                     diagnosisArrayList.add(diagnosis.lookup_data_name);
                 }
@@ -758,6 +958,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             }
         }));
     }
+
     private void loadInstructionData() {
 
         compositeDisposable.add(mService.getDiagnosisList("INSTRUCTION").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<DiagnosisListReponses>() {
@@ -777,6 +978,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             }
         }));
     }
+
     private void loadDurationData() {
 
         compositeDisposable.add(mService.getDiagnosisList("DURMU").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<DiagnosisListReponses>() {
@@ -817,12 +1019,15 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         }));
     }
 
+    ArrayList<Medication> medArraylist;
+
     private void loadMedicationData() {
 
         compositeDisposable.add(mService.getMedicationList("MED").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<MedicationListResponses>() {
             @Override
             public void accept(MedicationListResponses medicationListResponses) throws Exception {
 
+                medArraylist = medicationListResponses.data_list;
                 for (Medication medication : medicationListResponses.data_list) {
                     medicationArrayList.add(medication.item_name);
                 }
@@ -852,6 +1057,14 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        arrayList.clear();
+        arrayListDignosis.clear();
+        arrayListMedication.clear();
+        arrayListDuration.clear();
+        arrayListDose.clear();
+        arrayListAdvise.clear();
+    }
+    public static void onClear(){
         arrayList.clear();
         arrayListDignosis.clear();
         arrayListMedication.clear();

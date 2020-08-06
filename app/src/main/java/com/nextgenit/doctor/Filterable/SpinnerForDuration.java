@@ -120,7 +120,7 @@ public class SpinnerForDuration implements Filterable {
             public void onClick(View v) {
                 String s = searchBox.getText().toString();
                 if (!s.equals("")){
-                    investigationTypeInterface.add(quantity.getText().toString()+" "+s);
+                    investigationTypeInterface.add(quantity.getText().toString(),s);
                 }
 
             }
