@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nextgenit.doctor.Adapter.DashboardAdapter;
@@ -16,16 +20,27 @@ import com.nextgenit.doctor.Adapter.RxDoseInstructionAdapter;
 import com.nextgenit.doctor.Adapter.ViewAdviseAdapter;
 import com.nextgenit.doctor.Adapter.ViewDiagnosisAdapter;
 import com.nextgenit.doctor.Adapter.ViewPathologyAdapter;
+import com.nextgenit.doctor.LocalModel.PrescriptionModel;
+import com.nextgenit.doctor.Network.IRetrofitApi;
+import com.nextgenit.doctor.NetworkModel.APIResponses;
 import com.nextgenit.doctor.NetworkModel.PatientList;
+import com.nextgenit.doctor.NetworkModel.RegistrationResponses;
 import com.nextgenit.doctor.R;
+import com.nextgenit.doctor.Utils.Common;
 import com.nextgenit.doctor.Utils.SharedPreferenceUtil;
 
 import java.util.ArrayList;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 import static com.nextgenit.doctor.Activity.PrescriptionEngineActivity.arrayList;
 
 public class PrescriptionViewActivity extends AppCompatActivity {
-
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    IRetrofitApi mService;
     ArrayList<String> dose;
     ArrayList<String> instruction;
     ArrayList<String> diagnosis;
@@ -45,10 +60,16 @@ public class PrescriptionViewActivity extends AppCompatActivity {
     TextView tv_patient_name;
     TextView tv_patient_details;
     TextView tv_name;
+    Button btn_done;
+    ProgressBar progress_bar;
+    String data="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription_view);
+        btn_done=findViewById(R.id.btn_done);
+        progress_bar=findViewById(R.id.progress_bar);
+        mService= Common.getApiXact();
         rc_rx_duration=findViewById(R.id.rc_rx_duration);
         rc_rx_diagnosis=findViewById(R.id.rc_rx_diagnosis);
         rc_advise=findViewById(R.id.rc_advise);
@@ -87,5 +108,46 @@ public class PrescriptionViewActivity extends AppCompatActivity {
         tv_patient_name.setText(patientList.patient_name);
         tv_name.setText(SharedPreferenceUtil.getUserName(PrescriptionViewActivity.this));
         tv_patient_details.setText("Age - "+patientList.age+", "+patientList.gender_txt+", Wt-"+patientList.initial_weight+"kg, "+"Ht-"+patientList.initial_weight+"");
+        btn_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLoad();
+            }
+        });
+        data=SharedPreferenceUtil.getData(PrescriptionViewActivity.this);
+        Log.e("Value","Value"+SharedPreferenceUtil.getData(PrescriptionViewActivity.this));
+    }
+
+    private void onLoad(){
+        progress_bar.setVisibility(View.VISIBLE);
+        compositeDisposable.add(mService.postPrescription(data).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<APIResponses>() {
+            @Override
+            public void accept(APIResponses apiResponses) throws Exception {
+                Log.e("ff", "dgg" + new Gson().toJson(apiResponses));
+
+                progress_bar.setVisibility(View.GONE);
+                if (apiResponses.status.equals("success")) {
+                    //    SharedPreferenceUtil.saveShared(RegistrationActivity.this, SharedPreferenceUtil.TYPE_USER_ID, registrationResponses.user.user_no_pk + "");
+                    Toast.makeText(PrescriptionViewActivity.this, "Successfully Created", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(PrescriptionViewActivity.this,DashboardActivity.class));
+                    finish();
+
+                     PrescriptionEngineActivity.onClear();
+
+                }
+                else if (apiResponses.status.equals("failed")){
+                    Toast.makeText(PrescriptionViewActivity.this, apiResponses.message, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                progress_bar.setVisibility(View.GONE);
+                Log.e("ff", "dgg" + throwable.getMessage());
+                Toast.makeText(PrescriptionViewActivity.this, "Unauthorized", Toast.LENGTH_SHORT).show();
+
+            }
+        }));
     }
 }

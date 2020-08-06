@@ -11,4 +11,6 @@ public class Diagnosis {
     public String  lookup_data_name;
     @SerializedName("lookup_code")
     public String  lookup_code;
+    @SerializedName("lookup_id")
+    public int  lookup_id;
 }

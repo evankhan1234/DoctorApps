@@ -1,5 +1,6 @@
 package com.nextgenit.doctor.Network;
 
+import com.nextgenit.doctor.NetworkModel.APIResponses;
 import com.nextgenit.doctor.NetworkModel.DiagnosisListReponses;
 import com.nextgenit.doctor.NetworkModel.InvestigationListResponses;
 import com.nextgenit.doctor.NetworkModel.LoginResponses;
@@ -43,6 +44,11 @@ public interface IRetrofitApi {
     @POST("auth/login")
     io.reactivex.Observable<LoginResponses> postLogin(@Field("email") String email,
                                                       @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("auth/store-prescription")
+    io.reactivex.Observable<APIResponses> postPrescription(@Field("presc_data") String presc_data
+                                                     );
     @FormUrlEncoded
     @POST("auth/doctor-reg")
     io.reactivex.Observable<RegistrationResponses> postRegistration(@Field("doc_name") String doc_name,

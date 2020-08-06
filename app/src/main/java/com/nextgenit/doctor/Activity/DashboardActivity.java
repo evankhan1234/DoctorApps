@@ -26,6 +26,7 @@ import com.nextgenit.doctor.NetworkModel.Specialist;
 import com.nextgenit.doctor.NetworkModel.SpecialistResponses;
 import com.nextgenit.doctor.R;
 import com.nextgenit.doctor.Utils.Common;
+import com.nextgenit.doctor.Utils.SharedPreferenceUtil;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
@@ -75,6 +76,8 @@ public class DashboardActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.e("sp_water", "" + pharmacyArrayList.get(position).pharmacy_id);
                 pharmacyId = pharmacyArrayList.get(position).pharmacy_id;
+                SharedPreferenceUtil.saveShared(DashboardActivity.this, SharedPreferenceUtil.PHARMACY_ID, pharmacyId+"");
+
                 if (pharmacyId==-1){
                     loadDataAll();
                 }
