@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public class PatientListResponses extends APIResponses {
     @SerializedName("data_list")
-    public ArrayList<PatientList> data_list;
+    public ArrayList<NewPatientList> data_list;
 }

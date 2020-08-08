@@ -23,6 +23,7 @@ import com.nextgenit.doctor.Adapter.ViewPathologyAdapter;
 import com.nextgenit.doctor.LocalModel.PrescriptionModel;
 import com.nextgenit.doctor.Network.IRetrofitApi;
 import com.nextgenit.doctor.NetworkModel.APIResponses;
+import com.nextgenit.doctor.NetworkModel.NewPatientList;
 import com.nextgenit.doctor.NetworkModel.PatientList;
 import com.nextgenit.doctor.NetworkModel.RegistrationResponses;
 import com.nextgenit.doctor.R;
@@ -56,7 +57,7 @@ public class PrescriptionViewActivity extends AppCompatActivity {
     RecyclerView rc_rx_diagnosis;
     RecyclerView rc_investigation;
     RecyclerView rc_advise;
-    PatientList patientList;
+    NewPatientList patientList;
     TextView tv_patient_name;
     TextView tv_patient_details;
     TextView tv_name;
@@ -149,5 +150,16 @@ public class PrescriptionViewActivity extends AppCompatActivity {
 
             }
         }));
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        compositeDisposable.clear();
     }
 }

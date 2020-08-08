@@ -21,6 +21,13 @@ public interface IRetrofitApi {
 //
 //    io.reactivex.Observable<MedicineResponses> getMedicines();
 //    @POST("user/login")
+
+    @FormUrlEncoded
+    @POST("auth/appointed-patient-list")
+    io.reactivex.Observable<PatientListResponses> getNewPatientList(@Field("pharmacy_id") int pharmacy_id,
+                                                                    @Field("doctor_id") int doctor_id,
+                                                                    @Field("appointment_date") String appointment_date);
+
     @POST("auth/patient-list")
     io.reactivex.Observable<PatientListResponses> getPatientListAll();
     @FormUrlEncoded

@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.nextgenit.doctor.Adapter.DashboardAdapter;
 import com.nextgenit.doctor.Interface.IClickListener;
 import com.nextgenit.doctor.Network.IRetrofitApi;
+import com.nextgenit.doctor.NetworkModel.NewPatientList;
 import com.nextgenit.doctor.NetworkModel.PatientList;
 import com.nextgenit.doctor.NetworkModel.PatientListResponses;
 import com.nextgenit.doctor.NetworkModel.Pharmacy;
@@ -30,7 +31,9 @@ import com.nextgenit.doctor.Utils.SharedPreferenceUtil;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -96,7 +99,10 @@ public class DashboardActivity extends AppCompatActivity {
     }
     private void loadDataAll() {
         progress_bar.setVisibility(View.VISIBLE);
-        compositeDisposable.add(mService.getPatientListAll().observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<PatientListResponses>() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date12 = new Date(System.currentTimeMillis());
+        String currentDate = formatter.format(date12);
+        compositeDisposable.add(mService.getNewPatientList(0,Integer.parseInt(SharedPreferenceUtil.getUserID(DashboardActivity.this)),currentDate).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<PatientListResponses>() {
             @Override
             public void accept(PatientListResponses patientListResponses) throws Exception {
                 Log.e("study", "study" + new Gson().toJson(patientListResponses));
@@ -116,7 +122,10 @@ public class DashboardActivity extends AppCompatActivity {
     }
     private void loadData(int pharmacyId) {
         progress_bar.setVisibility(View.VISIBLE);
-        compositeDisposable.add(mService.getPatientList(pharmacyId).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<PatientListResponses>() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date12 = new Date(System.currentTimeMillis());
+        String currentDate = formatter.format(date12);
+        compositeDisposable.add(mService.getNewPatientList(pharmacyId,Integer.parseInt(SharedPreferenceUtil.getUserID(DashboardActivity.this)),currentDate).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<PatientListResponses>() {
             @Override
             public void accept(PatientListResponses patientListResponses) throws Exception {
                 Log.e("study", "study" + new Gson().toJson(patientListResponses));
@@ -157,7 +166,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private IClickListener iClickListener= new IClickListener() {
         @Override
-        public void show(PatientList patientList) {
+        public void show(NewPatientList patientList) {
             Intent intent = new Intent(DashboardActivity.this, PrescriptionEngineActivity.class);
             intent.putExtra("patient", patientList);
             startActivity(intent);
