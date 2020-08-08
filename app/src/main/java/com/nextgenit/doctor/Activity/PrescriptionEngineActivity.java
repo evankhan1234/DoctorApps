@@ -55,6 +55,7 @@ import com.nextgenit.doctor.NetworkModel.Investigation;
 import com.nextgenit.doctor.NetworkModel.InvestigationListResponses;
 import com.nextgenit.doctor.NetworkModel.Medication;
 import com.nextgenit.doctor.NetworkModel.MedicationListResponses;
+import com.nextgenit.doctor.NetworkModel.NewPatientList;
 import com.nextgenit.doctor.NetworkModel.PatientList;
 import com.nextgenit.doctor.NetworkModel.Pharmacy;
 import com.nextgenit.doctor.NetworkModel.PharmacyListResponses;
@@ -73,7 +74,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class PrescriptionEngineActivity extends AppCompatActivity {
-    PatientList patientList;
+    NewPatientList patientList;
     TextView tv_investigation;
     TextView tv_diagnosis;
     TextView tv_medication;
@@ -293,11 +294,12 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         int value = 0;
         int valueFor = 0;
         PrescriptionModel prescriptionModel = new PrescriptionModel();
-        prescriptionModel.appointment_id = 0;
+        prescriptionModel.appointment_id = patientList.appointment_id;
+        prescriptionModel.pharmacy_id = patientList.pharmacy_id;
         prescriptionModel.prescription_id = 0;
         prescriptionModel.prs_state = "NEW";
         prescriptionModel.created_by = Integer.parseInt(SharedPreferenceUtil.getUserID(PrescriptionEngineActivity.this));
-        prescriptionModel.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+      //  prescriptionModel.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
 
         ArrayList<PrescriptionModel.Details> diagnosisDataArrayList = new ArrayList<>();
         ArrayList<PrescriptionModel.Medicine> medicineDataArrayList = new ArrayList<>();
