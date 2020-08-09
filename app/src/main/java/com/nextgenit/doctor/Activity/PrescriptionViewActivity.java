@@ -151,4 +151,15 @@ public class PrescriptionViewActivity extends AppCompatActivity {
             }
         }));
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        compositeDisposable.clear();
+    }
 }

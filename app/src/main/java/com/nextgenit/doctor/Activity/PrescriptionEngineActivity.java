@@ -100,6 +100,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     IRetrofitApi mService;
     ProgressBar progress_bar;
     ArrayList<Diagnosis> digArrayList;
+    ArrayList<Diagnosis> digAdviseArrayList;
     ArrayList<Investigation> invArrayList;
     ArrayList<String> investigationArrayList = new ArrayList<>();
     ArrayList<String> diagnosisArrayList = new ArrayList<>();
@@ -306,6 +307,25 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
         ArrayList<String> arrayListDiagnosisDuplicate =arrayListDignosis;
         ArrayList<String> arrayListInvestigation =arrayList;
+        ArrayList<String> arrayListAdviseDuplicate = arrayListAdvise;
+
+        for (Diagnosis diagnosis : digAdviseArrayList) {
+            for (int i = 0; i < arrayListAdvise.size(); i++) {
+                if (arrayListAdvise.get(i).equals(diagnosis.lookup_data_name)) {
+                    value = value + 1;
+                    PrescriptionModel.Details diagnosisData = new PrescriptionModel.Details();
+                    diagnosisData.id = diagnosis.lookup_data_id;
+                    diagnosisData.lookup_type = diagnosis.lookup_code;
+                    diagnosisData.lookup_name = diagnosis.lookup_data_name;
+                    diagnosisData.lookup_id = diagnosis.lookup_id;
+                    diagnosisData.pharmacy_id = patientList.pharmacy_id;
+                    diagnosisData.sl = value;
+                    diagnosisDataArrayList.add(diagnosisData);
+                    arrayListAdviseDuplicate.remove(i);
+                }
+            }
+
+        }
         for (Diagnosis diagnosis : digArrayList) {
             for (int i = 0; i < arrayListDignosis.size(); i++) {
                 if (arrayListDignosis.get(i).equals(diagnosis.lookup_data_name)) {
@@ -315,7 +335,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
                     diagnosisData.lookup_type = diagnosis.lookup_code;
                     diagnosisData.lookup_name = diagnosis.lookup_data_name;
                     diagnosisData.lookup_id = diagnosis.lookup_id;
-                    diagnosisData.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+                    diagnosisData.pharmacy_id = patientList.pharmacy_id;
                     diagnosisData.sl = value;
                     diagnosisDataArrayList.add(diagnosisData);
                     arrayListDiagnosisDuplicate.remove(i);
@@ -332,7 +352,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
                     diagnosisData.lookup_type = investigation.item_type;
                     diagnosisData.lookup_name = investigation.item_name;
                     diagnosisData.lookup_id = Integer.parseInt(investigation.item_id);
-                    diagnosisData.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+                    diagnosisData.pharmacy_id = patientList.pharmacy_id;
                     diagnosisData.sl = value;
                     diagnosisDataArrayList.add(diagnosisData);
                     arrayListInvestigation.remove(i);
@@ -345,6 +365,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         ArrayList<String> arrayListMedDurationDuplicate = arrayListDuration;
         ArrayList<String> arrayListMedDurationSecondDuplicate = arrayListDurationSecond;
         ArrayList<String> arrayListMedInstructionDuplicate = arrayListInstructon;
+
         for (Medication medication : medArraylist) {
             for (int i = 0; i < arrayListMedication.size(); i++) {
 
@@ -395,7 +416,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             diagnosisData.lookup_type = "DIAGNOSIS";
             diagnosisData.lookup_name = arrayListDiagnosisDuplicate.get(i);
             diagnosisData.lookup_id = 0;
-            diagnosisData.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+            diagnosisData.pharmacy_id = patientList.pharmacy_id;
             diagnosisData.sl = value;
             diagnosisDataArrayList.add(diagnosisData);
         }
@@ -407,11 +428,21 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             diagnosisData.lookup_type = "PATH";
             diagnosisData.lookup_name = arrayListInvestigation.get(i);
             diagnosisData.lookup_id = 0;
-            diagnosisData.pharmacy_id = Integer.parseInt(SharedPreferenceUtil.getPharmacyId(PrescriptionEngineActivity.this));
+            diagnosisData.pharmacy_id = patientList.pharmacy_id;
             diagnosisData.sl = value;
             diagnosisDataArrayList.add(diagnosisData);
         }
-
+        for (int i = 0; i < arrayListAdviseDuplicate.size(); i++) {
+            value = value + 1;
+            PrescriptionModel.Details diagnosisData = new PrescriptionModel.Details();
+            diagnosisData.id =0;
+            diagnosisData.lookup_type = "ADVICE";
+            diagnosisData.lookup_name = arrayListAdviseDuplicate.get(i);
+            diagnosisData.lookup_id = 0;
+            diagnosisData.pharmacy_id = patientList.pharmacy_id;
+            diagnosisData.sl = value;
+            diagnosisDataArrayList.add(diagnosisData);
+        }
 
 
         //
@@ -1006,7 +1037,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         compositeDisposable.add(mService.getDiagnosisList("ADVICE").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<DiagnosisListReponses>() {
             @Override
             public void accept(DiagnosisListReponses diagnosisListReponses) throws Exception {
-
+                digAdviseArrayList=diagnosisListReponses.data_list;
                 for (Diagnosis diagnosis : diagnosisListReponses.data_list) {
                     adviseArrayList.add(diagnosis.lookup_data_name);
                 }
