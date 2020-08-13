@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,8 @@ public class PrescriptionViewActivity extends AppCompatActivity {
     Button btn_done;
     ProgressBar progress_bar;
     String data="";
+    ImageView img_log_out;
+    ImageView img_close;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,22 @@ public class PrescriptionViewActivity extends AppCompatActivity {
         tv_patient_name=findViewById(R.id.tv_patient_name);
         tv_patient_details=findViewById(R.id.tv_patient_details);
         tv_name=findViewById(R.id.tv_name);
+        img_log_out=findViewById(R.id.img_log_out);
+        img_close=findViewById(R.id.img_close);
+        img_log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PrescriptionViewActivity.this,LoginActivity.class));
+                SharedPreferenceUtil.saveShared(PrescriptionViewActivity.this, SharedPreferenceUtil.TYPE_USER_ID,  "");
+                finish();
+            }
+        });
+        img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         LinearLayoutManager lm1 = new LinearLayoutManager(this);
         LinearLayoutManager lm2 = new LinearLayoutManager(this);
         LinearLayoutManager lm3 = new LinearLayoutManager(this);

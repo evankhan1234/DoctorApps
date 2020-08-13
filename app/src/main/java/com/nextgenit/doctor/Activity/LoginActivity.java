@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password=et_password.getText().toString();
                 if (email.equals("") && password.equals("") ){
 
-                    Util.snackBar("All Data Needed",rlt_root);
+                    Util.snackBar("All the fields are required",rlt_root);
                 }
                 else if (email.equals("") ){
                     Util.snackBar("Email is Empty",rlt_root);
@@ -130,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             progress_bar.setVisibility(View.GONE);
                             if (loginEntity.status.equals("success")) {
-                                SharedPreferenceUtil.saveShared(LoginActivity.this, SharedPreferenceUtil.TYPE_USER_ID, loginEntity.user.user_no_pk + "");
+                                SharedPreferenceUtil.saveShared(LoginActivity.this, SharedPreferenceUtil.TYPE_USER_ID, loginEntity.user.person_no_fk + "");
                                 SharedPreferenceUtil.saveShared(LoginActivity.this, SharedPreferenceUtil.TYPE_USER_NAME, loginEntity.user.user_fullname + "");
                                 Toast.makeText(LoginActivity.this, "Successfully Login", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this,DashboardActivity.class));
