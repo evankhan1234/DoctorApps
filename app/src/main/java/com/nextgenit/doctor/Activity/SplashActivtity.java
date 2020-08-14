@@ -24,11 +24,11 @@ public class SplashActivtity extends AppCompatActivity {
     }
     private void goToLoginPage() {
         if (SharedPreferenceUtil.getUserID(SplashActivtity.this)==null|| SharedPreferenceUtil.getUserID(SplashActivtity.this).equals("")) {
-            Intent i = new Intent(SplashActivtity.this, LoginActivity.class);
+            Intent i = new Intent(SplashActivtity.this, StartActivity.class);
             startActivity(i);
             finish();
         } else {
-            startActivity(new Intent(SplashActivtity.this, DashboardActivity.class));
+            startActivity(new Intent(SplashActivtity.this, StartActivity.class));
             finish();
 
         }
