@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
@@ -53,12 +54,14 @@ public class DashboardActivity extends AppCompatActivity {
     Spinner spinner_pharmacy;
     int pharmacyId;
     SwipyRefreshLayout swipe_refresh;
+    ImageView img_log_out;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mService= Common.getApiXact();
         rcv_list=findViewById(R.id.rcv_list);
+        img_log_out=findViewById(R.id.img_log_out);
         spinner_pharmacy=findViewById(R.id.spinner_pharmacy);
         swipe_refresh=findViewById(R.id.swipe_refresh);
         progress_bar=findViewById(R.id.progress_bar);
@@ -66,7 +69,14 @@ public class DashboardActivity extends AppCompatActivity {
         LinearLayoutManager lm = new LinearLayoutManager(this);
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         rcv_list.setLayoutManager(lm);
-
+        img_log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardActivity.this,LoginActivity.class));
+                SharedPreferenceUtil.saveShared(DashboardActivity.this, SharedPreferenceUtil.TYPE_USER_ID,  "");
+                finish();
+            }
+        });
         swipe_refresh.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {

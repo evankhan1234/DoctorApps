@@ -264,7 +264,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String confirm_password=et_confirm_password.getText().toString();
                 if (name.equals("") && password.equals("") && email.equals("") && phone.equals("") && confirm_password.equals("") ){
 
-                    Util.snackBar("All Data Needed",rlt_root);
+                    Util.snackBar("All the fields are required",rlt_root);
                 }
                 else if (email.equals("") ){
                     Util.snackBar("Email is Empty",rlt_root);
@@ -288,7 +288,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             progress_bar.setVisibility(View.GONE);
                             if (registrationResponses.status.equals("success")) {
                                 //    SharedPreferenceUtil.saveShared(RegistrationActivity.this, SharedPreferenceUtil.TYPE_USER_ID, registrationResponses.user.user_no_pk + "");
-                                Toast.makeText(RegistrationActivity.this, "Successfully Registration", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegistrationActivity.this, "Your registration is completed successfully", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
                                 finish();
 
