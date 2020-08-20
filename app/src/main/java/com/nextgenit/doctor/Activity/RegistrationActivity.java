@@ -1,5 +1,6 @@
 package com.nextgenit.doctor.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -20,6 +21,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.nextgenit.doctor.Network.IRetrofitApi;
 import com.nextgenit.doctor.NetworkModel.RegistrationResponses;
@@ -30,6 +38,7 @@ import com.nextgenit.doctor.Utils.Common;
 import com.nextgenit.doctor.Utils.Util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -57,11 +66,14 @@ public class RegistrationActivity extends AppCompatActivity {
     boolean test = true;
     boolean test_confirm = true;
     int specializationId;
+    FirebaseAuth auth;
+    DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mService= Common.getApiXact();
+        auth = FirebaseAuth.getInstance();
         progress_bar=findViewById(R.id.progress_bar);
         spinner_specialization=findViewById(R.id.spinner_specialization);
         tv_login=findViewById(R.id.tv_login);
@@ -287,10 +299,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                             progress_bar.setVisibility(View.GONE);
                             if (registrationResponses.status.equals("success")) {
-                                //    SharedPreferenceUtil.saveShared(RegistrationActivity.this, SharedPreferenceUtil.TYPE_USER_ID, registrationResponses.user.user_no_pk + "");
-                                Toast.makeText(RegistrationActivity.this, "Your registration is completed successfully", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
-                                finish();
+                                register(name,email,password);
 
                             }
                             else if (registrationResponses.status.equals("failed")){
@@ -312,6 +321,42 @@ public class RegistrationActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void register(final String username, String email, String password){
+
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()){
+                            FirebaseUser firebaseUser = auth.getCurrentUser();
+                            assert firebaseUser != null;
+                            String userid = firebaseUser.getUid();
+
+                            reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
+
+                            HashMap<String, String> hashMap = new HashMap<>();
+                            hashMap.put("id", userid);
+                            hashMap.put("email", email);
+                            hashMap.put("name", username);
+                            hashMap.put("type", "default");
+
+                            reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(RegistrationActivity.this, "Your registration is completed successfully", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(RegistrationActivity.this,LoginActivity.class));
+                                        finish();
+                                        progress_bar.setVisibility(View.GONE);
+                                    }
+                                }
+                            });
+                        } else {
+                            Toast.makeText(RegistrationActivity.this, "You can't register woth this email or password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
     private void loadData() {
         progress_bar.setVisibility(View.VISIBLE);
