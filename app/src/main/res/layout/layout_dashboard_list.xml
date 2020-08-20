@@ -131,12 +131,14 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/image"
                 android:layout_centerInParent="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="right"
-                android:src="@drawable/ic_more"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
+                android:src="@drawable/pho"
+                android:layout_marginRight="15dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
         </RelativeLayout>
 
         <RelativeLayout

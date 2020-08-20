@@ -3,16 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.nextgenit.doctor">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -23,15 +16,14 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup"
-        >
-        <service android:name=".Activity.MainService" />
-        <activity android:name=".Activity.PrescriptionViewActivity"/>
+        tools:replace="android:allowBackup">
+        <activity android:name=".Activity.CallingActivity"></activity>
+        <activity android:name=".Activity.VideoChatActivity" />
+        <activity android:name=".Activity.RegisterActivity" />
+        <activity android:name=".Activity.PrescriptionViewActivity" />
         <activity android:name=".Activity.PrescriptionEngineActivity" />
         <activity android:name=".Activity.RegistrationActivity" />
         <activity android:name=".Activity.DashboardActivity" />
-        <activity android:name=".Activity.CallActivity" />
-        <activity android:name=".Activity.StartActivity" />
         <activity
             android:name=".Activity.LoginActivity"
             android:screenOrientation="portrait"

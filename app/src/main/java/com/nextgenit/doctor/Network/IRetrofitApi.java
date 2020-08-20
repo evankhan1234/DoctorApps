@@ -1,6 +1,7 @@
 package com.nextgenit.doctor.Network;
 
 import com.nextgenit.doctor.NetworkModel.APIResponses;
+import com.nextgenit.doctor.NetworkModel.ContentResponses;
 import com.nextgenit.doctor.NetworkModel.DiagnosisListReponses;
 import com.nextgenit.doctor.NetworkModel.InvestigationListResponses;
 import com.nextgenit.doctor.NetworkModel.LoginResponses;
@@ -21,6 +22,10 @@ public interface IRetrofitApi {
 //
 //    io.reactivex.Observable<MedicineResponses> getMedicines();
 //    @POST("user/login")
+
+    @FormUrlEncoded
+    @POST("auth/get-video-content")
+    io.reactivex.Observable<ContentResponses> getVideoContent(@Field("pharmacy_id") int pharmacy_id);
 
     @FormUrlEncoded
     @POST("auth/appointed-patient-list")

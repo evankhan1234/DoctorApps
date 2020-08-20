@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nextgenit.doctor.Interface.IClickListener;
+import com.nextgenit.doctor.Interface.IPharmacyClickListener;
 import com.nextgenit.doctor.NetworkModel.NewPatientList;
 import com.nextgenit.doctor.NetworkModel.PatientList;
 import com.nextgenit.doctor.R;
@@ -27,10 +29,12 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     private Activity mActivity = null;
     private ArrayList<NewPatientList> messageEntities;
     private IClickListener iClickListener;
-    public DashboardAdapter(Activity activity, ArrayList<NewPatientList> messageEntitie,IClickListener iClickListeners) {
+    private IPharmacyClickListener pharmacyClickListener;
+    public DashboardAdapter(Activity activity, ArrayList<NewPatientList> messageEntitie,IClickListener iClickListeners,IPharmacyClickListener pharmacyClickListeners) {
         mActivity = activity;
         messageEntities = messageEntitie;
         iClickListener=iClickListeners;
+        pharmacyClickListener=pharmacyClickListeners;
     }
 
 
@@ -62,6 +66,12 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
                 iClickListener.show(messageEntities.get(position));
             }
         });
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pharmacyClickListener.onClick(messageEntities.get(position).pharmacy_id);
+            }
+        });
     }
 
     @Override
@@ -79,6 +89,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         private TextView et_weight;
         private TextView et_height;
         private RoundedImageView user_icon;
+        private ImageView image;
 
 
         public DashboardListiewHolder(View itemView) {
@@ -91,6 +102,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             tv_phone_number = itemView.findViewById(R.id.tv_phone_number);
             et_weight = itemView.findViewById(R.id.et_weight);
             et_height = itemView.findViewById(R.id.et_height);
+            image = itemView.findViewById(R.id.image);
 
 
         }
