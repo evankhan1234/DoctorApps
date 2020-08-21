@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -137,6 +138,8 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     LinearLayout linear_diagnosis;
     Button btn_prescription;
 
+    ImageView img_close;
+    ImageView img_log_out;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +157,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         rc_duration = findViewById(R.id.rc_duration);
         tv_dose = findViewById(R.id.tv_dose);
         tv_dose_for = findViewById(R.id.tv_dose_for);
+        img_close = findViewById(R.id.img_close);
         tv_medication = findViewById(R.id.tv_medication);
         rc_investigation = findViewById(R.id.rc_investigation);
         tv_diagnosis_for = findViewById(R.id.tv_diagnosis_for);
@@ -164,6 +168,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         linear_diagnosis = findViewById(R.id.linear_diagnosis);
         btn_prescription = findViewById(R.id.btn_prescription);
         tv_instruction_for = findViewById(R.id.tv_instruction_for);
+        img_log_out = findViewById(R.id.img_log_out);
         LinearLayoutManager lm1 = new LinearLayoutManager(this);
         LinearLayoutManager lm2 = new LinearLayoutManager(this);
         LinearLayoutManager lm3 = new LinearLayoutManager(this);
@@ -188,7 +193,21 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         tv_investigation = findViewById(R.id.tv_investigation);
         progress_bar = findViewById(R.id.progress_bar);
         patientList = getIntent().getExtras().getParcelable("patient");
+        img_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        img_log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                startActivity(new Intent(PrescriptionEngineActivity.this,LoginActivity.class));
+                SharedPreferenceUtil.saveShared(PrescriptionEngineActivity.this, SharedPreferenceUtil.TYPE_USER_ID,  "");
+                finish();
+            }
+        });
         tv_investigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
