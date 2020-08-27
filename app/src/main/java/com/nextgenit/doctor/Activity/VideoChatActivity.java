@@ -75,6 +75,23 @@ public class VideoChatActivity extends AppCompatActivity implements  Session.Ses
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (mPublisher!=null){
+            mPublisher.destroy();
+        }
+        if (mSubscriber!=null){
+            mSubscriber.destroy();
+        }
+        status(user);
+        Intent intent = new Intent(this, DashboardActivity.class);// New activity
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         checkForRecevingCall();
