@@ -20,12 +20,14 @@ public class DurationRemoveOrAddAdapter extends RecyclerView.Adapter<DurationRem
 
     private Activity mActivity = null;
     private ArrayList<String> messageEntities;
+    private ArrayList<String> messageDuration;
     String types;
 
-    public DurationRemoveOrAddAdapter(Activity activity, ArrayList<String> messageEntitie, String type) {
+    public DurationRemoveOrAddAdapter(Activity activity, ArrayList<String> messageEntitie,ArrayList<String> messageDurations, String type) {
         mActivity = activity;
         messageEntities = messageEntitie;
         types = type;
+        messageDuration = messageDurations;
     }
 
 
@@ -41,7 +43,7 @@ public class DurationRemoveOrAddAdapter extends RecyclerView.Adapter<DurationRem
     public void onBindViewHolder(DurationRemoveOrAddAdapter.TagListiewHolder holder, final int position) {
 
         if (types.equals("D")) {
-            holder.mButtonTagList.setText(messageEntities.get(position));
+            holder.mButtonTagList.setText(messageEntities.get(position)+" "+messageDuration.get(position));
             holder.mButtonSelectImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

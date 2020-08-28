@@ -285,6 +285,8 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(PrescriptionEngineActivity.this, PrescriptionViewActivity.class);
                     intent.putStringArrayListExtra("advise", arrayListAdvise);
+                    intent.putStringArrayListExtra("duration", arrayListDuration);
+                    intent.putStringArrayListExtra("durationSecond", arrayListDurationSecond);
                     intent.putStringArrayListExtra("dose", arrayListDose);
                     intent.putStringArrayListExtra("instruction", arrayListInstructon);
                     intent.putStringArrayListExtra("diagnosis", arrayListDignosis);
@@ -859,7 +861,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     private DurationInterface durationInterface = new DurationInterface() {
         @Override
         public void postion(String position, String Type) {
-            durationRemoveOrAddAdapter = new DurationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDuration, "D");
+            durationRemoveOrAddAdapter = new DurationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDuration,arrayListDuration, "D");
             rc_duration.setAdapter(durationRemoveOrAddAdapter);
             spinnerForDuration.closeSpinerDialog();
             arrayListDuration.add(position);
@@ -882,7 +884,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     private DurationTypeInterface durationTypeInterface = new DurationTypeInterface() {
         @Override
         public void add(String type,String Duration) {
-            durationRemoveOrAddAdapter = new DurationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDuration, "D");
+            durationRemoveOrAddAdapter = new DurationRemoveOrAddAdapter(PrescriptionEngineActivity.this, arrayListDuration,arrayListDurationSecond, "D");
             rc_duration.setAdapter(durationRemoveOrAddAdapter);
             spinnerForDuration.closeSpinerDialog();
             arrayListDuration.add(type);
