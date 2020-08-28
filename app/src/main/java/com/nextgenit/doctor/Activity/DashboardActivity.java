@@ -1,5 +1,6 @@
 package com.nextgenit.doctor.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,9 +18,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.nextgenit.doctor.Adapter.DashboardAdapter;
 import com.nextgenit.doctor.Interface.IClickListener;
@@ -67,6 +73,7 @@ public class DashboardActivity extends AppCompatActivity {
     SwipyRefreshLayout swipe_refresh;
     ImageView img_log_out;
     DatabaseReference reference;
+    private DatabaseReference userRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +86,7 @@ public class DashboardActivity extends AppCompatActivity {
         progress_bar = findViewById(R.id.progress_bar);
         mActivity = this;
        // requestPermission();
+        userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         LinearLayoutManager lm = new LinearLayoutManager(this);
         lm.setOrientation(LinearLayoutManager.VERTICAL);
         rcv_list.setLayoutManager(lm);
@@ -205,11 +213,32 @@ public class DashboardActivity extends AppCompatActivity {
             public void accept(ContentResponses contentResponses) throws Exception {
                 Log.e("study", "study" + new Gson().toJson(contentResponses));
                 progress_bar.setVisibility(View.GONE);
-                userId=contentResponses.data_list.content;
-                status(contentResponses.data_list.content);
-                Intent intent= new Intent(DashboardActivity.this, CallingActivity.class);
-                intent.putExtra("value",userId);
-                startActivity(intent);
+
+                userRef.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.e("snapshot","value"+ snapshot.child("type").getValue().toString());
+
+                        String type=snapshot.child("type").getValue().toString();
+                        if (type.equals("Accept")){
+                            Toast.makeText(mActivity, "Already in Call", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            userId=contentResponses.data_list.content;
+                            status(contentResponses.data_list.content);
+                            Intent intent= new Intent(DashboardActivity.this, CallingActivity.class);
+                            intent.putExtra("value",userId);
+                            startActivity(intent);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
         }, new Consumer<Throwable>() {
             @Override

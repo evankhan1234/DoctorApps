@@ -63,7 +63,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_width="150dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/logo"
+                    android:src="@drawable/main"
                     android:visibility="visible"
                     />
 
