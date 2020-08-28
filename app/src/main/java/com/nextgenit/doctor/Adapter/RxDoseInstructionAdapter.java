@@ -24,13 +24,17 @@ public class RxDoseInstructionAdapter extends RecyclerView.Adapter<RxDoseInstruc
     public ArrayList<String> doesEntities;
     public ArrayList<String> instructionEntities;
     public ArrayList<String> medicationEntities;
+    public ArrayList<String> duration;
+    public ArrayList<String> durationSecond;
 
 
-    public RxDoseInstructionAdapter(Activity activity, ArrayList<String> messageEntitie,ArrayList<String> instructionEntitie,ArrayList<String> medicationEntitie) {
+    public RxDoseInstructionAdapter(Activity activity, ArrayList<String> messageEntitie,ArrayList<String> instructionEntitie,ArrayList<String> medicationEntitie,ArrayList<String> duration,ArrayList<String> durationSecond) {
         mActivity = activity;
         this.doesEntities = messageEntitie;
         this.instructionEntities = instructionEntitie;
         this.medicationEntities = medicationEntitie;
+        this.duration = duration;
+        this.durationSecond = durationSecond;
 
 
     }
@@ -46,7 +50,7 @@ public class RxDoseInstructionAdapter extends RecyclerView.Adapter<RxDoseInstruc
     @Override
     public void onBindViewHolder(final RxDoseInstructionAdapter.PlaceTagListiewHolder holder, final int position) {
 
-        holder.tv_instruction.setText(doesEntities.get(position)+" "+instructionEntities.get(position));
+        holder.tv_instruction.setText(doesEntities.get(position)+" "+instructionEntities.get(position)+" ("+duration.get(position)+" "+durationSecond.get(position)+")");
         holder.tv_dose.setText(medicationEntities.get(position));
 
 

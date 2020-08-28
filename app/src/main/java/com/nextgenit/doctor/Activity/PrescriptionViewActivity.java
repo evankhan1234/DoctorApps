@@ -44,6 +44,8 @@ public class PrescriptionViewActivity extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     IRetrofitApi mService;
     ArrayList<String> dose;
+    ArrayList<String> duration;
+    ArrayList<String> durationSecond;
     ArrayList<String> instruction;
     ArrayList<String> diagnosis;
     ArrayList<String> investigation;
@@ -94,6 +96,8 @@ public class PrescriptionViewActivity extends AppCompatActivity {
         img_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PrescriptionEngineActivity.onClear();
+                startActivity(new Intent(PrescriptionViewActivity.this,DashboardActivity.class));
                 finish();
             }
         });
@@ -111,13 +115,15 @@ public class PrescriptionViewActivity extends AppCompatActivity {
         rc_advise.setLayoutManager(lm4);
         patientList = getIntent().getExtras().getParcelable("patient");
         dose = getIntent().getStringArrayListExtra("dose");
+        duration = getIntent().getStringArrayListExtra("duration");
+        durationSecond = getIntent().getStringArrayListExtra("durationSecond");
         instruction = getIntent().getStringArrayListExtra("instruction");
         diagnosis = getIntent().getStringArrayListExtra("diagnosis");
         investigation = getIntent().getStringArrayListExtra("investigation");
         advise = getIntent().getStringArrayListExtra("advise");
         medication = getIntent().getStringArrayListExtra("medication");
-        Log.e("dose","dose"+new Gson().toJson(advise));
-        rxDoseInstructionAdapter = new RxDoseInstructionAdapter(PrescriptionViewActivity.this, dose,instruction,medication);
+      //  Log.e("dose","dose"+new Gson().toJson(advise));
+        rxDoseInstructionAdapter = new RxDoseInstructionAdapter(PrescriptionViewActivity.this, dose,instruction,medication,duration,durationSecond);
         rc_rx_duration.setAdapter(rxDoseInstructionAdapter);
         diagnosisAdapter = new ViewDiagnosisAdapter(PrescriptionViewActivity.this, diagnosis);
         rc_rx_diagnosis.setAdapter(diagnosisAdapter);
@@ -135,7 +141,16 @@ public class PrescriptionViewActivity extends AppCompatActivity {
             }
         });
         data=SharedPreferenceUtil.getData(PrescriptionViewActivity.this);
-        Log.e("Value","Value"+SharedPreferenceUtil.getData(PrescriptionViewActivity.this));
+        //Log.e("Value","Value"+SharedPreferenceUtil.getData(PrescriptionViewActivity.this));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        PrescriptionEngineActivity.onClear();
+        startActivity(new Intent(PrescriptionViewActivity.this,DashboardActivity.class));
+        finish();
+
     }
 
     private void onLoad(){
