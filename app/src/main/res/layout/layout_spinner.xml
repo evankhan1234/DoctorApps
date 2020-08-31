@@ -31,7 +31,7 @@
                 android:id="@+id/quantity"
                 android:layout_width="80dp"
                 android:layout_height="40dp"
-                android:hint="Quantity"
+                android:hint="ex-7"
                 android:layout_marginLeft="5dp"
                 android:background="#ffffff"
                 android:inputType="number" />
@@ -80,15 +80,22 @@
                 android:clickable="true"
                 android:padding="5dp"
                 android:id="@+id/add"
-                android:layout_width="wrap_content"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@drawable/status_accepted"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="Add" />
             <TextView
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@drawable/status_accepted"
+                android:layout_width="100dp"
                 android:clickable="true"
                 android:padding="5dp"
                 android:layout_alignParentRight="true"
                 android:id="@+id/close"
-                android:layout_width="wrap_content"
+                android:backgroundTint="#F44336"
                 android:layout_height="wrap_content"
                 android:text="Close" />
         </RelativeLayout>

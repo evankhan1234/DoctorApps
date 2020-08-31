@@ -32,6 +32,10 @@ public class NewPatientList implements Parcelable {
     public int  pharmacy_id;
     @SerializedName("pharmacy_name")
     public String  pharmacy_name;
+    @SerializedName("prescription_no_pk")
+    public String  prescription_no_pk;
+    @SerializedName("prescription_code")
+    public String  prescription_code;
 
     protected NewPatientList(Parcel in) {
         appointment_id = in.readInt();
@@ -47,6 +51,8 @@ public class NewPatientList implements Parcelable {
         initial_weight = in.readString();
         pharmacy_id = in.readInt();
         pharmacy_name = in.readString();
+        prescription_no_pk = in.readString();
+        prescription_code = in.readString();
     }
 
     public static final Creator<NewPatientList> CREATOR = new Creator<NewPatientList>() {
@@ -81,5 +87,7 @@ public class NewPatientList implements Parcelable {
         dest.writeString(initial_weight);
         dest.writeInt(pharmacy_id);
         dest.writeString(pharmacy_name);
+        dest.writeString(prescription_no_pk);
+        dest.writeString(prescription_code);
     }
 }

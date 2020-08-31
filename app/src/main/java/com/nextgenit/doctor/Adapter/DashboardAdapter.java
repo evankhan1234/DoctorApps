@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +20,9 @@ import com.nextgenit.doctor.NetworkModel.NewPatientList;
 import com.nextgenit.doctor.NetworkModel.PatientList;
 import com.nextgenit.doctor.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -46,7 +49,11 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     @Override
     public void onBindViewHolder(final DashboardAdapter.DashboardListiewHolder holder, final int position) {
-
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date(System.currentTimeMillis());
+        String currentDate = formatter.format(date);
+        holder.tv_date.setText(currentDate);
+        holder.et_email.setText(messageEntities.get(position).initial_cc);
         holder.tv_pharmacy_name.setText(messageEntities.get(position).pharmacy_name);
         holder.tv_name.setText(messageEntities.get(position).patient_name);
         holder.tv_age.setText("Age - "+messageEntities.get(position).age+","+messageEntities.get(position).gender_txt);
@@ -83,6 +90,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     public class DashboardListiewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_pharmacy_name;
+        private TextView tv_date;
         private TextView tv_name;
         private TextView tv_age;
         private TextView tv_phone_number;
@@ -90,6 +98,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         private TextView et_height;
         private RoundedImageView user_icon;
         private ImageView image;
+        private EditText et_email;
 
 
         public DashboardListiewHolder(View itemView) {
@@ -103,6 +112,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             et_weight = itemView.findViewById(R.id.et_weight);
             et_height = itemView.findViewById(R.id.et_height);
             image = itemView.findViewById(R.id.image);
+            tv_date = itemView.findViewById(R.id.tv_date);
+            et_email = itemView.findViewById(R.id.et_email);
 
 
         }
