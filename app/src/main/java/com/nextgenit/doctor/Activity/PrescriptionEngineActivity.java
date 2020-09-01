@@ -281,7 +281,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if (arrayListMedication.size()==arrayListDose.size() && arrayListMedication.size()==arrayListInstructon.size()){
+                if (arrayListMedication.size()==arrayListDose.size() && arrayListMedication.size()==arrayListDuration.size() && arrayListMedication.size()==arrayListInstructon.size()){
 
                     Intent intent = new Intent(PrescriptionEngineActivity.this, PrescriptionViewActivity.class);
                     intent.putStringArrayListExtra("advise", arrayListAdvise);
@@ -298,7 +298,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
                     showFor();
                 }
                 else{
-                    Toast.makeText(PrescriptionEngineActivity.this, "Please Select Dose and Instruction", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PrescriptionEngineActivity.this, "Please Select Medicine,Dose,Duration and Instruction", Toast.LENGTH_SHORT).show();
                 }
 
 //                arrayList.clear();
@@ -782,7 +782,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
                 tv_instruction_for.setVisibility(View.VISIBLE);
             }
             instructionRemoveOrAddAdapter.notifyDataSetChanged();
-            onAdviseShow();
+            //onAdviseShow();
         }
     };
 
@@ -805,7 +805,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
                 tv_instruction_for.setVisibility(View.VISIBLE);
             }
             instructionRemoveOrAddAdapter.notifyDataSetChanged();
-            onAdviseShow();
+            //onAdviseShow();
         }
     };
     ///////Dose////////////

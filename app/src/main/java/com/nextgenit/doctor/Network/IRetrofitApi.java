@@ -8,6 +8,8 @@ import com.nextgenit.doctor.NetworkModel.LoginResponses;
 import com.nextgenit.doctor.NetworkModel.MedicationListResponses;
 import com.nextgenit.doctor.NetworkModel.PatientListResponses;
 import com.nextgenit.doctor.NetworkModel.PharmacyListResponses;
+import com.nextgenit.doctor.NetworkModel.PrescriptionListHeaderResponses;
+import com.nextgenit.doctor.NetworkModel.PresecriptionViewResponses;
 import com.nextgenit.doctor.NetworkModel.RegistrationResponses;
 import com.nextgenit.doctor.NetworkModel.SpecialistResponses;
 
@@ -56,7 +58,13 @@ public interface IRetrofitApi {
     @POST("auth/login")
     io.reactivex.Observable<LoginResponses> postLogin(@Field("email") String email,
                                                       @Field("password") String password);
+    @FormUrlEncoded
+    @POST("auth/get-prescription-mst")
+    io.reactivex.Observable<PresecriptionViewResponses> getPrescriptionViewHeader(@Field("prescription_id") int prescription_id);
 
+    @FormUrlEncoded
+    @POST("auth/get-prescription-dtls")
+    io.reactivex.Observable<PrescriptionListHeaderResponses> getPrescriptionViewHeaderDetails(@Field("prescription_id") int prescription_id);
     @FormUrlEncoded
     @POST("auth/store-prescription")
     io.reactivex.Observable<APIResponses> postPrescription(@Field("presc_data") String presc_data

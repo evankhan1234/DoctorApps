@@ -281,9 +281,17 @@ public class DashboardActivity extends AppCompatActivity {
     private IClickListener iClickListener = new IClickListener() {
         @Override
         public void show(NewPatientList patientList) {
-            Intent intent = new Intent(DashboardActivity.this, PrescriptionEngineActivity.class);
-            intent.putExtra("patient", patientList);
-            startActivity(intent);
+            if (patientList.prescription_no_pk==null){
+                Intent intent = new Intent(DashboardActivity.this, PrescriptionViewAgainActivity.class);
+                intent.putExtra("id", Integer.parseInt(patientList.prescription_no_pk));
+                startActivity(intent);
+            }
+            else{
+                Intent intent = new Intent(DashboardActivity.this, PrescriptionEngineActivity.class);
+                intent.putExtra("patient", patientList);
+                startActivity(intent);
+            }
+
         }
     };
 

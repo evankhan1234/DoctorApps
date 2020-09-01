@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".Activity.CallingActivity"></activity>
+        <activity android:name=".Activity.PrescriptionViewAgainActivity"></activity>
+        <activity android:name=".Activity.CallingActivity" />
         <activity android:name=".Activity.VideoChatActivity" />
         <activity android:name=".Activity.RegisterActivity" />
         <activity android:name=".Activity.PrescriptionViewActivity" />
