@@ -16,6 +16,7 @@
     <LinearLayout
 
 
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -40,11 +41,12 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="13sp" />
             <TextView
+                android:id="@+id/tv_serial"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Avaiable"
-                android:textColor="#5cba47"
+                android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
             <TextView
                 android:id="@+id/tv_date"
