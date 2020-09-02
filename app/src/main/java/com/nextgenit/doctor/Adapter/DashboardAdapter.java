@@ -57,9 +57,29 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
         if (messageEntities.get(position).prescription_no_pk!=null){
            holder.linear.setBackgroundColor(mActivity.getResources().getColor(R.color.two));
+            holder.tv_date.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_serial.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_pharmacy_name.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_name.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_phone_number.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_age.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_disease.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_weight.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_height.setTextColor(mActivity.getResources().getColor(R.color.white));
         }
         else{
             holder.linear.setBackgroundColor(mActivity.getResources().getColor(R.color.one));
+
+
+            holder.tv_date.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_serial.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_pharmacy_name.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_name.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_phone_number.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_age.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_disease.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_weight.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_height.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
         }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date(System.currentTimeMillis());
@@ -103,6 +123,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     public class DashboardListiewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_pharmacy_name;
+        private TextView tv_weight;
+        private TextView tv_height;
+        private TextView tv_disease;
         private TextView tv_serial;
         private TextView tv_date;
         private TextView tv_name;
@@ -131,6 +154,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             et_email = itemView.findViewById(R.id.et_email);
             tv_serial = itemView.findViewById(R.id.tv_serial);
             linear = itemView.findViewById(R.id.linear);
+            tv_disease = itemView.findViewById(R.id.tv_disease);
+            tv_weight = itemView.findViewById(R.id.tv_weight);
+            tv_height = itemView.findViewById(R.id.tv_height);
 
 
         }
