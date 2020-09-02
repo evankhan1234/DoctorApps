@@ -1,11 +1,13 @@
 package com.nextgenit.doctor.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -135,11 +137,22 @@ public class DashboardActivity extends AppCompatActivity {
     IPharmacyClickListener pharmacyClickListener = new IPharmacyClickListener() {
         @Override
         public void onClick(int pharmacyId) {
-            loadVideoData(pharmacyId);
 
+            open(pharmacyId);
         }
     };
 
+    public void open(int pharmacyId){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Are you want to call?");
+        alertDialogBuilder.setPositiveButton("yes",
+                (arg0, arg1) -> loadVideoData(pharmacyId));
+
+        alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == 786 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -281,7 +294,7 @@ public class DashboardActivity extends AppCompatActivity {
     private IClickListener iClickListener = new IClickListener() {
         @Override
         public void show(NewPatientList patientList) {
-            if (patientList.prescription_no_pk==null){
+            if (patientList.prescription_no_pk!=null){
                 Intent intent = new Intent(DashboardActivity.this, PrescriptionViewAgainActivity.class);
                 intent.putExtra("id", Integer.parseInt(patientList.prescription_no_pk));
                 startActivity(intent);

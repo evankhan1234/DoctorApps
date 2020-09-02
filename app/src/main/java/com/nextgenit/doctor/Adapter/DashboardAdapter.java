@@ -1,6 +1,7 @@
 package com.nextgenit.doctor.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,12 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nextgenit.doctor.Activity.DashboardActivity;
+import com.nextgenit.doctor.Activity.PrescriptionEngineActivity;
+import com.nextgenit.doctor.Activity.PrescriptionViewAgainActivity;
 import com.nextgenit.doctor.Interface.IClickListener;
 import com.nextgenit.doctor.Interface.IPharmacyClickListener;
 import com.nextgenit.doctor.NetworkModel.NewPatientList;
@@ -49,10 +54,18 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
     @Override
     public void onBindViewHolder(final DashboardAdapter.DashboardListiewHolder holder, final int position) {
+
+        if (messageEntities.get(position).prescription_no_pk!=null){
+           holder.linear.setBackgroundColor(mActivity.getResources().getColor(R.color.two));
+        }
+        else{
+            holder.linear.setBackgroundColor(mActivity.getResources().getColor(R.color.one));
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date(System.currentTimeMillis());
         String currentDate = formatter.format(date);
         holder.tv_date.setText(currentDate);
+        holder.tv_serial.setText("Serial no: "+messageEntities.get(position).slot_sl);
         holder.et_email.setText(messageEntities.get(position).initial_cc);
         holder.tv_pharmacy_name.setText(messageEntities.get(position).pharmacy_name);
         holder.tv_name.setText(messageEntities.get(position).patient_name);
@@ -90,6 +103,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
     public class DashboardListiewHolder extends RecyclerView.ViewHolder {
 
         private TextView tv_pharmacy_name;
+        private TextView tv_serial;
         private TextView tv_date;
         private TextView tv_name;
         private TextView tv_age;
@@ -99,6 +113,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         private RoundedImageView user_icon;
         private ImageView image;
         private EditText et_email;
+        private LinearLayout linear;
 
 
         public DashboardListiewHolder(View itemView) {
@@ -114,6 +129,8 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             image = itemView.findViewById(R.id.image);
             tv_date = itemView.findViewById(R.id.tv_date);
             et_email = itemView.findViewById(R.id.et_email);
+            tv_serial = itemView.findViewById(R.id.tv_serial);
+            linear = itemView.findViewById(R.id.linear);
 
 
         }

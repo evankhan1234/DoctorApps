@@ -5,6 +5,8 @@
     <color name="colorAccent">#000000</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+    <color name="one">#ebecee</color>
+    <color name="two">#74D678</color>
     <color name="transparent">#00000000</color>
     <color name="gray_for">#b8b8b8</color>
     <color name="indicator_unselected">#4D000000</color>

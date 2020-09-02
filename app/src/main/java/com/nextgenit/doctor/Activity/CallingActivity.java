@@ -68,6 +68,7 @@ public class CallingActivity extends AppCompatActivity {
                     Intent intent= new Intent(CallingActivity.this, VideoChatActivity.class);
                     intent.putExtra("value",user);
                     startActivity(intent);
+                    finish();
                 }
                 else if (type.equals("End")){
                     Intent intent= new Intent(CallingActivity.this, DashboardActivity.class);
