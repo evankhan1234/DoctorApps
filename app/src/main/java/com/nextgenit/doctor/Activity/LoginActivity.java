@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()){
                                         progress_bar.setVisibility(View.VISIBLE);
-                                        compositeDisposable.add(mService.postLogin(email,password).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<LoginResponses>() {
+                                        compositeDisposable.add(mService.postLogin(email,password,"D").observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<LoginResponses>() {
                                             @Override
                                             public void accept(LoginResponses loginEntity) throws Exception {
                                                 Log.e("ff", "dgg" + new Gson().toJson(loginEntity));
