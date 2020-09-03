@@ -66,11 +66,12 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
             holder.tv_disease.setTextColor(mActivity.getResources().getColor(R.color.white));
             holder.tv_weight.setTextColor(mActivity.getResources().getColor(R.color.white));
             holder.tv_height.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.image.setVisibility(View.GONE);
         }
         else{
             holder.linear.setBackgroundColor(mActivity.getResources().getColor(R.color.one));
 
-
+            holder.image.setVisibility(View.VISIBLE);
             holder.tv_date.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
             holder.tv_serial.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
             holder.tv_pharmacy_name.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
