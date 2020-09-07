@@ -7,4 +7,8 @@ public class APIResponses {
     public String  status;
     @SerializedName("message")
     public String  message;
+    @SerializedName("data_session")
+    public String  data_session;
+    @SerializedName("data_token")
+    public String  data_token;
 }

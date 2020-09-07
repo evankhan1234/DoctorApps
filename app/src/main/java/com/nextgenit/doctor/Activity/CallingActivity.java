@@ -21,6 +21,8 @@ import java.util.HashMap;
 public class CallingActivity extends AppCompatActivity {
     private ImageView cancelCallBtn;
     String user="";
+    String session="";
+    String token="";
     DatabaseReference reference;
     private DatabaseReference usersRef;
     @Override
@@ -30,6 +32,8 @@ public class CallingActivity extends AppCompatActivity {
         cancelCallBtn=findViewById(R.id.cancel_call);
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         user = getIntent().getStringExtra("value");
+        session = getIntent().getStringExtra("session");
+        token = getIntent().getStringExtra("token");
         cancelCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,6 +71,8 @@ public class CallingActivity extends AppCompatActivity {
 
                     Intent intent= new Intent(CallingActivity.this, VideoChatActivity.class);
                     intent.putExtra("value",user);
+                    intent.putExtra("session",session);
+                    intent.putExtra("token",token);
                     startActivity(intent);
                     finish();
                 }

@@ -33,6 +33,7 @@ import com.nextgenit.doctor.Adapter.DashboardAdapter;
 import com.nextgenit.doctor.Interface.IClickListener;
 import com.nextgenit.doctor.Interface.IPharmacyClickListener;
 import com.nextgenit.doctor.Network.IRetrofitApi;
+import com.nextgenit.doctor.NetworkModel.APIResponses;
 import com.nextgenit.doctor.NetworkModel.ContentResponses;
 import com.nextgenit.doctor.NetworkModel.NewPatientList;
 import com.nextgenit.doctor.NetworkModel.PatientList;
@@ -174,7 +175,7 @@ public class DashboardActivity extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date date12 = new Date(System.currentTimeMillis());
         String currentDate = formatter.format(date12);
-        compositeDisposable.add(mService.getNewPatientList(0, Integer.parseInt(SharedPreferenceUtil.getUserID(DashboardActivity.this)), currentDate).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<PatientListResponses>() {
+        compositeDisposable.add(mService.getNewPatientList( currentDate).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<PatientListResponses>() {
             @Override
             public void accept(PatientListResponses patientListResponses) throws Exception {
                 Log.e("study", "study" + new Gson().toJson(patientListResponses));
@@ -198,7 +199,7 @@ public class DashboardActivity extends AppCompatActivity {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date date12 = new Date(System.currentTimeMillis());
         String currentDate = formatter.format(date12);
-        compositeDisposable.add(mService.getNewPatientList(pharmacyId, Integer.parseInt(SharedPreferenceUtil.getUserID(DashboardActivity.this)), currentDate).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<PatientListResponses>() {
+        compositeDisposable.add(mService.getNewPatientList( currentDate).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<PatientListResponses>() {
             @Override
             public void accept(PatientListResponses patientListResponses) throws Exception {
                 Log.e("study", "study" + new Gson().toJson(patientListResponses));
@@ -218,6 +219,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     String userId="";
+    String content="";
     private void loadVideoData(int pharmacyId) {
         progress_bar.setVisibility(View.VISIBLE);
 
@@ -238,10 +240,8 @@ public class DashboardActivity extends AppCompatActivity {
                         }
                         else {
                             userId=contentResponses.data_list.content;
-                            status(contentResponses.data_list.content);
-                            Intent intent= new Intent(DashboardActivity.this, CallingActivity.class);
-                            intent.putExtra("value",userId);
-                            startActivity(intent);
+                            content=contentResponses.data_list.content;
+                            call(pharmacyId);
                         }
 
                     }
@@ -258,6 +258,30 @@ public class DashboardActivity extends AppCompatActivity {
             public void accept(Throwable throwable) throws Exception {
                 Log.e("study", "study" + throwable.getMessage());
                 progress_bar.setVisibility(View.GONE);
+            }
+        }));
+
+    }
+    private void call(int pharmacyId) {
+
+
+        compositeDisposable.add(mService.postSession("46887094","318e16db0130977ead6cce58fdebd06ee629f92d",pharmacyId).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<APIResponses>() {
+            @Override
+            public void accept(APIResponses apiResponses) throws Exception {
+                Log.e("study", "study" + new Gson().toJson(apiResponses));
+                status(content);
+                Intent intent= new Intent(DashboardActivity.this, CallingActivity.class);
+                intent.putExtra("value",userId);
+                intent.putExtra("session",apiResponses.data_session);
+                intent.putExtra("token",apiResponses.data_token);
+                startActivity(intent);
+
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e("aaa", "aaa" + throwable.getMessage());
+
             }
         }));
 

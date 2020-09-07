@@ -19,7 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.nextgenit.doctor.Network.IRetrofitApi;
 import com.nextgenit.doctor.R;
+import com.nextgenit.doctor.Utils.Common;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
 import com.opentok.android.PublisherKit;
@@ -29,13 +31,14 @@ import com.opentok.android.Subscriber;
 
 import java.util.HashMap;
 
+import io.reactivex.disposables.CompositeDisposable;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class VideoChatActivity extends AppCompatActivity implements  Session.SessionListener, PublisherKit.PublisherListener {
     public static final String API_KEY = "46887094";
-    public static final String SESSION_ID = "1_MX40Njg4NzA5NH5-MTU5NzY1NDY0ODk2Nn5xWTBLdzB3M0xaVlJ1ZVAxcjZ3SjB4Y2R-fg";
-    public static final String TOKEN = "T1==cGFydG5lcl9pZD00Njg4NzA5NCZzaWc9OTYzZDM3YmNiMmMzNDE0NDlmODFhZTc2YWExYTY5ZjM2YzBlNDIxNTpzZXNzaW9uX2lkPTFfTVg0ME5qZzROekE1Tkg1LU1UVTVOelkxTkRZME9EazJObjV4V1RCTGR6QjNNMHhhVmxKMVpWQXhjalozU2pCNFkyUi1mZyZjcmVhdGVfdGltZT0xNTk3NjU0NjY1Jm5vbmNlPTAuMjcyMTE4MDU5MTI5MDk1NyZyb2xlPXB1Ymxpc2hlciZleHBpcmVfdGltZT0xNjAwMjkzMzIzJmluaXRpYWxfbGF5b3V0X2NsYXNzX2xpc3Q9";
+    public static  String SESSION_ID = "";
+    public static  String TOKEN = "";
     private static final String TAG = VideoChatActivity.class.getSimpleName();
     private static final int RC_VIDEO_APP_PERM = 124;
     private ImageView closeVideoChatBtn;
@@ -48,15 +51,19 @@ public class VideoChatActivity extends AppCompatActivity implements  Session.Ses
     private Subscriber mSubscriber;
     String user="";
     DatabaseReference reference;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    IRetrofitApi mService;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_chat);
-
+        mService= Common.getApiXact();
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         closeVideoChatBtn = findViewById(R.id.close_video_chat_btn);
         user = getIntent().getStringExtra("value");
+        SESSION_ID = getIntent().getStringExtra("session");
+        TOKEN = getIntent().getStringExtra("token");
         closeVideoChatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +132,17 @@ public class VideoChatActivity extends AppCompatActivity implements  Session.Ses
 
             }
         });
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.clear();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        compositeDisposable.clear();
     }
     private void status(String status){
         reference = FirebaseDatabase.getInstance().getReference("Users").child(status);
