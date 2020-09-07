@@ -26,13 +26,17 @@ public interface IRetrofitApi {
 //    @POST("user/login")
 
     @FormUrlEncoded
+    @POST("auth/app-session")
+    io.reactivex.Observable<APIResponses> postSession(@Field("api_key") String api_key,
+                                                      @Field("api_secret") String api_secret,
+                                                      @Field("pharmacy_id") int pharmacy_id);
+    @FormUrlEncoded
     @POST("auth/get-video-content")
     io.reactivex.Observable<ContentResponses> getVideoContent(@Field("pharmacy_id") int pharmacy_id);
 
     @FormUrlEncoded
     @POST("auth/appointed-patient-list")
-    io.reactivex.Observable<PatientListResponses> getNewPatientList(@Field("pharmacy_id") int pharmacy_id,
-                                                                    @Field("doctor_id") int doctor_id,
+    io.reactivex.Observable<PatientListResponses> getNewPatientList(
                                                                     @Field("appointment_date") String appointment_date);
 
     @POST("auth/patient-list")
