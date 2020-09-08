@@ -266,7 +266,7 @@ public class DashboardActivity extends AppCompatActivity {
     private void call(int pharmacyId) {
 
 
-        compositeDisposable.add(mService.postSession("46887094","318e16db0130977ead6cce58fdebd06ee629f92d",pharmacyId).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<APIResponses>() {
+        compositeDisposable.add(mService.postSession("46912884","a2d1df9de1f4fc9a7c4aaad18494eed44f3a700c",pharmacyId).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<APIResponses>() {
             @Override
             public void accept(APIResponses apiResponses) throws Exception {
                 Log.e("study", "study" + new Gson().toJson(apiResponses));
@@ -292,6 +292,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("type", "Ringing");
+        hashMap.put("call", SharedPreferenceUtil.getUserName(DashboardActivity.this));
 
         reference.updateChildren(hashMap);
     }

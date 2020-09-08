@@ -25,6 +25,7 @@ import com.nextgenit.doctor.Interface.InstructionCloseDialogListener;
 import com.nextgenit.doctor.Interface.InstructionInterface;
 import com.nextgenit.doctor.Interface.InstructionTypeInterface;
 import com.nextgenit.doctor.R;
+import com.nextgenit.doctor.Utils.Common;
 
 import java.util.List;
 
@@ -113,7 +114,13 @@ public class SpinnerForInstruction implements Filterable {
             @Override
             public void onClick(View v) {
                 closeSpinerDialog();
-                instructionCloseDialogListener.onShow();
+                if (!Common.type.equals("ON")){
+                    instructionCloseDialogListener.onShow();
+                }
+                else{
+                    Common.type="";
+                }
+
             }
         });
         rippleViewAdd.setOnClickListener(new View.OnClickListener() {

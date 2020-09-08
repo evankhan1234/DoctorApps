@@ -48,6 +48,7 @@ import com.nextgenit.doctor.Interface.InstructionInterface;
 import com.nextgenit.doctor.Interface.InstructionTypeInterface;
 import com.nextgenit.doctor.Interface.InvestigationInterface;
 import com.nextgenit.doctor.Interface.InvestigationTypeInterface;
+import com.nextgenit.doctor.Interface.MedicationCloseDialogListener;
 import com.nextgenit.doctor.Interface.MedicationInterface;
 import com.nextgenit.doctor.Interface.MedicationTypeInterface;
 import com.nextgenit.doctor.LocalModel.DiagnosisData;
@@ -199,6 +200,12 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         img_close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                arrayList.clear();
+                arrayListDignosis.clear();
+                arrayListMedication.clear();
+                arrayListDuration.clear();
+                arrayListDose.clear();
+                arrayListAdvise.clear();
                 finish();
             }
         });
@@ -228,7 +235,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         tv_medication.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForMedication = new SpinnerForMedication(PrescriptionEngineActivity.this, medicationArrayList, "Select Medication", medicationInterface, "D", medicationTypeInterface);
+                spinnerForMedication = new SpinnerForMedication(PrescriptionEngineActivity.this, medicationArrayList, "Select Medication", medicationInterface, "D", medicationTypeInterface,medicationCloseDialogListener);
                 spinnerForMedication.showSpinerDialog();
             }
         });
@@ -238,6 +245,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             public void onClick(View v) {
                 spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface,doseCloseDialogListener);
                 spinnerForDose.showSpinerDialog();
+                Common.type="ON";
             }
         });
         tv_duration.setOnClickListener(new View.OnClickListener() {
@@ -245,6 +253,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             public void onClick(View v) {
                 spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface,durationCloseDialogListener);
                 spinnerForDuration.showSpinerDialog();
+                Common.type="ON";
             }
         });
         tv_advise.setOnClickListener(new View.OnClickListener() {
@@ -259,6 +268,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             public void onClick(View v) {
                 spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface,instructionCloseDialogListener);
                 spinnerForInstruction.showSpinerDialog();
+                Common.type="ON";
             }
         });
         final ProgressDialog progressDoalog;
@@ -314,7 +324,46 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             }
         });
     }
+    MedicationCloseDialogListener medicationCloseDialogListener = new MedicationCloseDialogListener() {
+        @Override
+        public void onShow() {
 
+            if (arrayListDose.size() > 0) {
+                arrayListDose.remove(arrayListDose.size()-1);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListDose.size() > 0) {
+                tv_dose_for.setVisibility(View.GONE);
+                rc_dose.setVisibility(View.VISIBLE);
+            } else {
+                rc_dose.setVisibility(View.GONE);
+                tv_dose_for.setVisibility(View.VISIBLE);
+            }
+            if (arrayListDuration.size() > 0) {
+                arrayListDuration.remove(arrayListDuration.size()-1);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListDuration.size() > 0) {
+                tv_duration_for.setVisibility(View.GONE);
+                rc_duration.setVisibility(View.VISIBLE);
+            } else {
+                rc_duration.setVisibility(View.GONE);
+                tv_duration_for.setVisibility(View.VISIBLE);
+            }
+            if (arrayListInstructon.size() > 0) {
+                arrayListInstructon.remove(arrayListInstructon.size()-1);
+                instructionRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListInstructon.size() > 0) {
+                tv_instruction_for.setVisibility(View.GONE);
+                rc_instruction.setVisibility(View.VISIBLE);
+            } else {
+                rc_instruction.setVisibility(View.GONE);
+                tv_instruction_for.setVisibility(View.VISIBLE);
+            }
+        }
+
+    };
     DurationCloseDialogListener durationCloseDialogListener= new DurationCloseDialogListener() {
         @Override
         public void onShow() {

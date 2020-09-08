@@ -36,7 +36,8 @@ import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class VideoChatActivity extends AppCompatActivity implements  Session.SessionListener, PublisherKit.PublisherListener {
-    public static final String API_KEY = "46887094";
+   // public static final String API_KEY = "46887094";
+    public static final String API_KEY = "46912884";
     public static  String SESSION_ID = "";
     public static  String TOKEN = "";
     private static final String TAG = VideoChatActivity.class.getSimpleName();

@@ -1,63 +1,34 @@
 {
   "project_info": {
-    "project_number": "907280751028",
-    "firebase_url": "https://bluehealth-db963.firebaseio.com",
-    "project_id": "bluehealth-db963",
-    "storage_bucket": "bluehealth-db963.appspot.com"
+    "project_number": "499823452224",
+    "firebase_url": "https://bluescareaid-18818.firebaseio.com",
+    "project_id": "bluescareaid-18818",
+    "storage_bucket": "bluescareaid-18818.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:907280751028:android:c7f9c4807c8df75b8efae1",
+        "mobilesdk_app_id": "1:499823452224:android:16dc9a2565997e2641ffa5",
         "android_client_info": {
           "package_name": "com.nextgenit.doctor"
         }
       },
       "oauth_client": [
         {
-          "client_id": "907280751028-1soedaa80g70l9dch7qe2feetau9js2p.apps.googleusercontent.com",
+          "client_id": "499823452224-t6ro45b72l6djsqfe5s4v0gkt9vkhio8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCnk3B17GyPUSJghuIPdZk5gauOzsmhp4E"
+          "current_key": "AIzaSyCcgyidtSCBhoie6xmNNMzefclTW-BeoHA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "907280751028-1soedaa80g70l9dch7qe2feetau9js2p.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:907280751028:android:2ced423a8986c0ef8efae1",
-        "android_client_info": {
-          "package_name": "com.nextgenit.pharmacyapp"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "907280751028-1soedaa80g70l9dch7qe2feetau9js2p.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCnk3B17GyPUSJghuIPdZk5gauOzsmhp4E"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "907280751028-1soedaa80g70l9dch7qe2feetau9js2p.apps.googleusercontent.com",
+              "client_id": "499823452224-t6ro45b72l6djsqfe5s4v0gkt9vkhio8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
