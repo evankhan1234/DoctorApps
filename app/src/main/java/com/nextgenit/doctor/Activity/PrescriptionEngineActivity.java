@@ -111,11 +111,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     ArrayList<String> instructionArrayList = new ArrayList<>();
     ArrayList<String> adviseArrayList = new ArrayList<>();
     InvestigationRemoveOrAddAdapter investigationRemoveOrAddAdapter;
-    MedicationRemoveOrAddAdapter medicationRemoveOrAddAdapter;
+    static MedicationRemoveOrAddAdapter medicationRemoveOrAddAdapter;
     DiagnosisRemoveOrAddAdapter diagnosisRemoveOrAddAdapter;
-    DoseRemoveOrAddAdapter doseRemoveOrAddAdapter;
-    DurationRemoveOrAddAdapter durationRemoveOrAddAdapter;
-    InstructionRemoveOrAddAdapter instructionRemoveOrAddAdapter;
+    static DoseRemoveOrAddAdapter doseRemoveOrAddAdapter;
+    static DurationRemoveOrAddAdapter durationRemoveOrAddAdapter;
+    static InstructionRemoveOrAddAdapter instructionRemoveOrAddAdapter;
     AdviseRemoveOrAddAdapter adviseRemoveOrAddAdapter;
     static ArrayList<String> arrayList = new ArrayList<>();
     static ArrayList<String> arrayListSecond = new ArrayList<>();
@@ -603,7 +603,32 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
     }
 
-    public static void MedicationShow() {
+    public static void MedicationShow(int position) {
+
+        try {
+            if (arrayListDose.size()>=position){
+                arrayListDose.remove(position);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDuration.size()>=position){
+                arrayListDuration.remove(position);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListInstructon.size()>=position){
+                arrayListInstructon.remove(position);
+                instructionRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (arrayListMedication.size() > 0) {
             tv_medication_for.setVisibility(View.GONE);
             rc_medication.setVisibility(View.VISIBLE);
@@ -611,10 +636,6 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_medication.setVisibility(View.GONE);
             tv_medication_for.setVisibility(View.VISIBLE);
         }
-
-    }
-
-    public static void DoseShow() {
         if (arrayListDose.size() > 0) {
             tv_dose_for.setVisibility(View.GONE);
             rc_dose.setVisibility(View.VISIBLE);
@@ -622,10 +643,6 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_dose.setVisibility(View.GONE);
             tv_dose_for.setVisibility(View.VISIBLE);
         }
-
-    }
-
-    public static void DurationShow() {
         if (arrayListDuration.size() > 0) {
             tv_duration_for.setVisibility(View.GONE);
             rc_duration.setVisibility(View.VISIBLE);
@@ -633,10 +650,173 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_duration.setVisibility(View.GONE);
             tv_duration_for.setVisibility(View.VISIBLE);
         }
+        if (arrayListInstructon.size() > 0) {
+            tv_instruction_for.setVisibility(View.GONE);
+            rc_instruction.setVisibility(View.VISIBLE);
+        } else {
+            rc_instruction.setVisibility(View.GONE);
+            tv_instruction_for.setVisibility(View.VISIBLE);
+        }
 
     }
 
-    public static void InstructionShow() {
+    public static void DoseShow(int position) {
+        try {
+            if (arrayListMedication.size()>=position){
+                arrayListMedication.remove(position);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDuration.size()>=position){
+                arrayListDuration.remove(position);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListInstructon.size()>=position){
+                arrayListInstructon.remove(position);
+                instructionRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (arrayListMedication.size() > 0) {
+            tv_medication_for.setVisibility(View.GONE);
+            rc_medication.setVisibility(View.VISIBLE);
+        } else {
+            rc_medication.setVisibility(View.GONE);
+            tv_medication_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDose.size() > 0) {
+            tv_dose_for.setVisibility(View.GONE);
+            rc_dose.setVisibility(View.VISIBLE);
+        } else {
+            rc_dose.setVisibility(View.GONE);
+            tv_dose_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDuration.size() > 0) {
+            tv_duration_for.setVisibility(View.GONE);
+            rc_duration.setVisibility(View.VISIBLE);
+        } else {
+            rc_duration.setVisibility(View.GONE);
+            tv_duration_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListInstructon.size() > 0) {
+            tv_instruction_for.setVisibility(View.GONE);
+            rc_instruction.setVisibility(View.VISIBLE);
+        } else {
+            rc_instruction.setVisibility(View.GONE);
+            tv_instruction_for.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static void DurationShow(int position) {
+        try {
+            if (arrayListMedication.size()>=position){
+                arrayListMedication.remove(position);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDose.size()>=position){
+                arrayListDose.remove(position);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListInstructon.size()>=position){
+                arrayListInstructon.remove(position);
+                instructionRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (arrayListMedication.size() > 0) {
+            tv_medication_for.setVisibility(View.GONE);
+            rc_medication.setVisibility(View.VISIBLE);
+        } else {
+            rc_medication.setVisibility(View.GONE);
+            tv_medication_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDose.size() > 0) {
+            tv_dose_for.setVisibility(View.GONE);
+            rc_dose.setVisibility(View.VISIBLE);
+        } else {
+            rc_dose.setVisibility(View.GONE);
+            tv_dose_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDuration.size() > 0) {
+            tv_duration_for.setVisibility(View.GONE);
+            rc_duration.setVisibility(View.VISIBLE);
+        } else {
+            rc_duration.setVisibility(View.GONE);
+            tv_duration_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListInstructon.size() > 0) {
+            tv_instruction_for.setVisibility(View.GONE);
+            rc_instruction.setVisibility(View.VISIBLE);
+        } else {
+            rc_instruction.setVisibility(View.GONE);
+            tv_instruction_for.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public static void InstructionShow(int position) {
+        try {
+            if (arrayListMedication.size()>=position){
+                arrayListMedication.remove(position);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDose.size()>=position){
+                arrayListDose.remove(position);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDuration.size()>=position){
+                arrayListDuration.remove(position);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (arrayListMedication.size() > 0) {
+            tv_medication_for.setVisibility(View.GONE);
+            rc_medication.setVisibility(View.VISIBLE);
+        } else {
+            rc_medication.setVisibility(View.GONE);
+            tv_medication_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDose.size() > 0) {
+            tv_dose_for.setVisibility(View.GONE);
+            rc_dose.setVisibility(View.VISIBLE);
+        } else {
+            rc_dose.setVisibility(View.GONE);
+            tv_dose_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDuration.size() > 0) {
+            tv_duration_for.setVisibility(View.GONE);
+            rc_duration.setVisibility(View.VISIBLE);
+        } else {
+            rc_duration.setVisibility(View.GONE);
+            tv_duration_for.setVisibility(View.VISIBLE);
+        }
         if (arrayListInstructon.size() > 0) {
             tv_instruction_for.setVisibility(View.GONE);
             rc_instruction.setVisibility(View.VISIBLE);

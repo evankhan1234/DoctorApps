@@ -47,7 +47,7 @@ public class InstructionRemoveOrAddAdapter extends RecyclerView.Adapter<Instruct
                 public void onClick(View view) {
                     messageEntities.remove(position);
                     notifyDataSetChanged();
-                    PrescriptionEngineActivity.InstructionShow();
+                    PrescriptionEngineActivity.InstructionShow(position);
                 }
             });
         }

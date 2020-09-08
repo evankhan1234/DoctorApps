@@ -47,7 +47,7 @@ public class MedicationRemoveOrAddAdapter extends RecyclerView.Adapter<Medicatio
                 public void onClick(View view) {
                     messageEntities.remove(position);
                     notifyDataSetChanged();
-                    PrescriptionEngineActivity.MedicationShow();
+                    PrescriptionEngineActivity.MedicationShow(position);
                 }
             });
         }

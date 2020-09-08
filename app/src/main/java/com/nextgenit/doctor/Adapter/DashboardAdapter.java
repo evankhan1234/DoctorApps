@@ -57,15 +57,15 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
 
         if (messageEntities.get(position).prescription_no_pk!=null){
            holder.linear.setBackgroundColor(mActivity.getResources().getColor(R.color.two));
-            holder.tv_date.setTextColor(mActivity.getResources().getColor(R.color.white));
-            holder.tv_serial.setTextColor(mActivity.getResources().getColor(R.color.white));
-            holder.tv_pharmacy_name.setTextColor(mActivity.getResources().getColor(R.color.white));
-            holder.tv_name.setTextColor(mActivity.getResources().getColor(R.color.white));
-            holder.tv_phone_number.setTextColor(mActivity.getResources().getColor(R.color.white));
-            holder.tv_age.setTextColor(mActivity.getResources().getColor(R.color.white));
-            holder.tv_disease.setTextColor(mActivity.getResources().getColor(R.color.white));
-            holder.tv_weight.setTextColor(mActivity.getResources().getColor(R.color.white));
-            holder.tv_height.setTextColor(mActivity.getResources().getColor(R.color.white));
+            holder.tv_date.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_serial.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_pharmacy_name.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_name.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_phone_number.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_age.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_disease.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_weight.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            holder.tv_height.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
             holder.image.setVisibility(View.GONE);
         }
         else{
