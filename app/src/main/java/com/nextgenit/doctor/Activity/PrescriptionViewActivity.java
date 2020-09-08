@@ -141,7 +141,7 @@ public class PrescriptionViewActivity extends AppCompatActivity {
             }
         });
         data=SharedPreferenceUtil.getData(PrescriptionViewActivity.this);
-        //Log.e("Value","Value"+SharedPreferenceUtil.getData(PrescriptionViewActivity.this));
+        Log.e("Value","Value"+SharedPreferenceUtil.getData(PrescriptionViewActivity.this));
     }
 
     @Override

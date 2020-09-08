@@ -37,10 +37,13 @@ import com.nextgenit.doctor.Interface.AdviceTypeInterface;
 import com.nextgenit.doctor.Interface.AdviseInterface;
 import com.nextgenit.doctor.Interface.DiagnosisInterface;
 import com.nextgenit.doctor.Interface.DiagnosisTypeInterface;
+import com.nextgenit.doctor.Interface.DoseCloseDialogListener;
 import com.nextgenit.doctor.Interface.DoseInterface;
 import com.nextgenit.doctor.Interface.DoseTypeInterface;
+import com.nextgenit.doctor.Interface.DurationCloseDialogListener;
 import com.nextgenit.doctor.Interface.DurationInterface;
 import com.nextgenit.doctor.Interface.DurationTypeInterface;
+import com.nextgenit.doctor.Interface.InstructionCloseDialogListener;
 import com.nextgenit.doctor.Interface.InstructionInterface;
 import com.nextgenit.doctor.Interface.InstructionTypeInterface;
 import com.nextgenit.doctor.Interface.InvestigationInterface;
@@ -111,11 +114,11 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     ArrayList<String> instructionArrayList = new ArrayList<>();
     ArrayList<String> adviseArrayList = new ArrayList<>();
     InvestigationRemoveOrAddAdapter investigationRemoveOrAddAdapter;
-    MedicationRemoveOrAddAdapter medicationRemoveOrAddAdapter;
+    static MedicationRemoveOrAddAdapter medicationRemoveOrAddAdapter;
     DiagnosisRemoveOrAddAdapter diagnosisRemoveOrAddAdapter;
-    DoseRemoveOrAddAdapter doseRemoveOrAddAdapter;
-    DurationRemoveOrAddAdapter durationRemoveOrAddAdapter;
-    InstructionRemoveOrAddAdapter instructionRemoveOrAddAdapter;
+    static DoseRemoveOrAddAdapter doseRemoveOrAddAdapter;
+    static DurationRemoveOrAddAdapter durationRemoveOrAddAdapter;
+    static InstructionRemoveOrAddAdapter instructionRemoveOrAddAdapter;
     AdviseRemoveOrAddAdapter adviseRemoveOrAddAdapter;
     static ArrayList<String> arrayList = new ArrayList<>();
     static ArrayList<String> arrayListSecond = new ArrayList<>();
@@ -233,14 +236,14 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         tv_dose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface);
+                spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface,doseCloseDialogListener);
                 spinnerForDose.showSpinerDialog();
             }
         });
         tv_duration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface);
+                spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface,durationCloseDialogListener);
                 spinnerForDuration.showSpinerDialog();
             }
         });
@@ -254,7 +257,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         tv_instruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface);
+                spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface,instructionCloseDialogListener);
                 spinnerForInstruction.showSpinerDialog();
             }
         });
@@ -312,6 +315,35 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         });
     }
 
+    DurationCloseDialogListener durationCloseDialogListener= new DurationCloseDialogListener() {
+        @Override
+        public void onShow() {
+
+            if (arrayListMedication.size() > 0) {
+                arrayListMedication.remove(arrayListMedication.size()-1);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListMedication.size() > 0) {
+                tv_medication_for.setVisibility(View.GONE);
+                rc_medication.setVisibility(View.VISIBLE);
+            } else {
+                rc_medication.setVisibility(View.GONE);
+                tv_medication_for.setVisibility(View.VISIBLE);
+            }
+            if (arrayListDose.size() > 0) {
+                arrayListDose.remove(arrayListDose.size()-1);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListDose.size() > 0) {
+                tv_dose_for.setVisibility(View.GONE);
+                rc_dose.setVisibility(View.VISIBLE);
+            } else {
+                rc_dose.setVisibility(View.GONE);
+                tv_dose_for.setVisibility(View.VISIBLE);
+            }
+
+        }
+    };
     private void showFor(){
         int value = 0;
         int valueFor = 0;
@@ -603,7 +635,32 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
     }
 
-    public static void MedicationShow() {
+    public static void MedicationShow(int position) {
+
+        try {
+            if (arrayListDose.size()>=position){
+                arrayListDose.remove(position);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDuration.size()>=position){
+                arrayListDuration.remove(position);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListInstructon.size()>=position){
+                arrayListInstructon.remove(position);
+                instructionRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (arrayListMedication.size() > 0) {
             tv_medication_for.setVisibility(View.GONE);
             rc_medication.setVisibility(View.VISIBLE);
@@ -611,10 +668,6 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_medication.setVisibility(View.GONE);
             tv_medication_for.setVisibility(View.VISIBLE);
         }
-
-    }
-
-    public static void DoseShow() {
         if (arrayListDose.size() > 0) {
             tv_dose_for.setVisibility(View.GONE);
             rc_dose.setVisibility(View.VISIBLE);
@@ -622,10 +675,6 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_dose.setVisibility(View.GONE);
             tv_dose_for.setVisibility(View.VISIBLE);
         }
-
-    }
-
-    public static void DurationShow() {
         if (arrayListDuration.size() > 0) {
             tv_duration_for.setVisibility(View.GONE);
             rc_duration.setVisibility(View.VISIBLE);
@@ -633,10 +682,173 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
             rc_duration.setVisibility(View.GONE);
             tv_duration_for.setVisibility(View.VISIBLE);
         }
+        if (arrayListInstructon.size() > 0) {
+            tv_instruction_for.setVisibility(View.GONE);
+            rc_instruction.setVisibility(View.VISIBLE);
+        } else {
+            rc_instruction.setVisibility(View.GONE);
+            tv_instruction_for.setVisibility(View.VISIBLE);
+        }
 
     }
 
-    public static void InstructionShow() {
+    public static void DoseShow(int position) {
+        try {
+            if (arrayListMedication.size()>=position){
+                arrayListMedication.remove(position);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDuration.size()>=position){
+                arrayListDuration.remove(position);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListInstructon.size()>=position){
+                arrayListInstructon.remove(position);
+                instructionRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (arrayListMedication.size() > 0) {
+            tv_medication_for.setVisibility(View.GONE);
+            rc_medication.setVisibility(View.VISIBLE);
+        } else {
+            rc_medication.setVisibility(View.GONE);
+            tv_medication_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDose.size() > 0) {
+            tv_dose_for.setVisibility(View.GONE);
+            rc_dose.setVisibility(View.VISIBLE);
+        } else {
+            rc_dose.setVisibility(View.GONE);
+            tv_dose_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDuration.size() > 0) {
+            tv_duration_for.setVisibility(View.GONE);
+            rc_duration.setVisibility(View.VISIBLE);
+        } else {
+            rc_duration.setVisibility(View.GONE);
+            tv_duration_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListInstructon.size() > 0) {
+            tv_instruction_for.setVisibility(View.GONE);
+            rc_instruction.setVisibility(View.VISIBLE);
+        } else {
+            rc_instruction.setVisibility(View.GONE);
+            tv_instruction_for.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public static void DurationShow(int position) {
+        try {
+            if (arrayListMedication.size()>=position){
+                arrayListMedication.remove(position);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDose.size()>=position){
+                arrayListDose.remove(position);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListInstructon.size()>=position){
+                arrayListInstructon.remove(position);
+                instructionRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (arrayListMedication.size() > 0) {
+            tv_medication_for.setVisibility(View.GONE);
+            rc_medication.setVisibility(View.VISIBLE);
+        } else {
+            rc_medication.setVisibility(View.GONE);
+            tv_medication_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDose.size() > 0) {
+            tv_dose_for.setVisibility(View.GONE);
+            rc_dose.setVisibility(View.VISIBLE);
+        } else {
+            rc_dose.setVisibility(View.GONE);
+            tv_dose_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDuration.size() > 0) {
+            tv_duration_for.setVisibility(View.GONE);
+            rc_duration.setVisibility(View.VISIBLE);
+        } else {
+            rc_duration.setVisibility(View.GONE);
+            tv_duration_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListInstructon.size() > 0) {
+            tv_instruction_for.setVisibility(View.GONE);
+            rc_instruction.setVisibility(View.VISIBLE);
+        } else {
+            rc_instruction.setVisibility(View.GONE);
+            tv_instruction_for.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    public static void InstructionShow(int position) {
+        try {
+            if (arrayListMedication.size()>=position){
+                arrayListMedication.remove(position);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDose.size()>=position){
+                arrayListDose.remove(position);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (arrayListDuration.size()>=position){
+                arrayListDuration.remove(position);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (arrayListMedication.size() > 0) {
+            tv_medication_for.setVisibility(View.GONE);
+            rc_medication.setVisibility(View.VISIBLE);
+        } else {
+            rc_medication.setVisibility(View.GONE);
+            tv_medication_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDose.size() > 0) {
+            tv_dose_for.setVisibility(View.GONE);
+            rc_dose.setVisibility(View.VISIBLE);
+        } else {
+            rc_dose.setVisibility(View.GONE);
+            tv_dose_for.setVisibility(View.VISIBLE);
+        }
+        if (arrayListDuration.size() > 0) {
+            tv_duration_for.setVisibility(View.GONE);
+            rc_duration.setVisibility(View.VISIBLE);
+        } else {
+            rc_duration.setVisibility(View.GONE);
+            tv_duration_for.setVisibility(View.VISIBLE);
+        }
         if (arrayListInstructon.size() > 0) {
             tv_instruction_for.setVisibility(View.GONE);
             rc_instruction.setVisibility(View.VISIBLE);
@@ -740,13 +952,67 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     };
 
     private void onDoseShow() {
-        spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface);
+        spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface,doseCloseDialogListener);
         spinnerForDose.showSpinerDialog();
     }
+    DoseCloseDialogListener doseCloseDialogListener= new DoseCloseDialogListener() {
+        @Override
+        public void onShow() {
+            if (arrayListMedication.size() > 0) {
+                arrayListMedication.remove(arrayListMedication.size()-1);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListMedication.size() > 0) {
+                tv_medication_for.setVisibility(View.GONE);
+                rc_medication.setVisibility(View.VISIBLE);
+            } else {
+                rc_medication.setVisibility(View.GONE);
+                tv_medication_for.setVisibility(View.VISIBLE);
+            }
 
+        }
+    };
+    InstructionCloseDialogListener instructionCloseDialogListener= new InstructionCloseDialogListener() {
+        @Override
+        public void onShow() {
+            if (arrayListMedication.size() > 0) {
+                arrayListMedication.remove(arrayListMedication.size()-1);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListMedication.size() > 0) {
+                tv_medication_for.setVisibility(View.GONE);
+                rc_medication.setVisibility(View.VISIBLE);
+            } else {
+                rc_medication.setVisibility(View.GONE);
+                tv_medication_for.setVisibility(View.VISIBLE);
+            }
+            if (arrayListDose.size() > 0) {
+                arrayListDose.remove(arrayListDose.size()-1);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListDose.size() > 0) {
+                tv_dose_for.setVisibility(View.GONE);
+                rc_dose.setVisibility(View.VISIBLE);
+            } else {
+                rc_dose.setVisibility(View.GONE);
+                tv_dose_for.setVisibility(View.VISIBLE);
+            }
+            if (arrayListDuration.size() > 0) {
+                arrayListDuration.remove(arrayListDuration.size()-1);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListDuration.size() > 0) {
+                tv_duration_for.setVisibility(View.GONE);
+                rc_duration.setVisibility(View.VISIBLE);
+            } else {
+                rc_duration.setVisibility(View.GONE);
+                tv_duration_for.setVisibility(View.VISIBLE);
+            }
+        }
+    };
     private void onDurationShow() {
 
-        spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface);
+        spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface,durationCloseDialogListener);
         spinnerForDuration.showSpinerDialog();
 
 
@@ -754,7 +1020,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
     private void onInstructionShow() {
 
-        spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface);
+        spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface,instructionCloseDialogListener);
         spinnerForInstruction.showSpinerDialog();
 
 

@@ -49,7 +49,7 @@ public class DurationRemoveOrAddAdapter extends RecyclerView.Adapter<DurationRem
                 public void onClick(View view) {
                     messageEntities.remove(position);
                     notifyDataSetChanged();
-                    PrescriptionEngineActivity.DurationShow();
+                    PrescriptionEngineActivity.DurationShow(position);
                 }
             });
         }

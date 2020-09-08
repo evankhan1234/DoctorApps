@@ -47,7 +47,7 @@ public class DoseRemoveOrAddAdapter extends RecyclerView.Adapter<DoseRemoveOrAdd
                 public void onClick(View view) {
                     messageEntities.remove(position);
                     notifyDataSetChanged();
-                    PrescriptionEngineActivity.DoseShow();
+                    PrescriptionEngineActivity.DoseShow(position);
                 }
             });
         }

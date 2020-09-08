@@ -21,6 +21,7 @@ import com.nextgenit.doctor.Adapter.DoseAdapter;
 import com.nextgenit.doctor.Adapter.DurationAdapter;
 import com.nextgenit.doctor.Interface.DoseInterface;
 import com.nextgenit.doctor.Interface.DoseTypeInterface;
+import com.nextgenit.doctor.Interface.DurationCloseDialogListener;
 import com.nextgenit.doctor.Interface.DurationInterface;
 import com.nextgenit.doctor.Interface.DurationTypeInterface;
 import com.nextgenit.doctor.R;
@@ -43,14 +44,15 @@ public class SpinnerForDuration implements Filterable {
     String types;
      EditText searchBox;
     DurationTypeInterface investigationTypeInterface;
-
-    public SpinnerForDuration(Activity activity, List<String> items, String dialogTitle,String type,DurationTypeInterface investigationTypeInterfaces) {
+    DurationCloseDialogListener durationCloseDialogListener;
+    public SpinnerForDuration(Activity activity, List<String> items, String dialogTitle,String type,DurationTypeInterface investigationTypeInterfaces,DurationCloseDialogListener durationCloseDialogListener) {
         this.items = items;
         this.context = activity;
         this.dTitle = dialogTitle;
         this.types = type;
 
         this.investigationTypeInterface = investigationTypeInterfaces;
+        this.durationCloseDialogListener = durationCloseDialogListener;
     }
 
 
@@ -113,6 +115,7 @@ public class SpinnerForDuration implements Filterable {
             @Override
             public void onClick(View v) {
                 closeSpinerDialog();
+                durationCloseDialogListener.onShow();
             }
         });
         rippleViewAdd.setOnClickListener(new View.OnClickListener() {

@@ -105,6 +105,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 loadDataAll();
+                loadDatas();
                 swipe_refresh.setRefreshing(false);
             }
         });
