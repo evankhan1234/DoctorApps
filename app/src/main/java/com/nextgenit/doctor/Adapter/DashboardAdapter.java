@@ -110,7 +110,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.Dash
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pharmacyClickListener.onClick(messageEntities.get(position).pharmacy_id);
+                pharmacyClickListener.onClick(messageEntities.get(position).pharmacy_id,messageEntities.get(position).pharmacy_name);
             }
         });
     }
