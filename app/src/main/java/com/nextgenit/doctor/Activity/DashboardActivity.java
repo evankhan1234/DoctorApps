@@ -138,17 +138,17 @@ public class DashboardActivity extends AppCompatActivity {
 
     IPharmacyClickListener pharmacyClickListener = new IPharmacyClickListener() {
         @Override
-        public void onClick(int pharmacyId) {
+        public void onClick(int pharmacyId,String pharmacy) {
 
-            open(pharmacyId);
+            open(pharmacyId,pharmacy);
         }
     };
 
-    public void open(int pharmacyId){
+    public void open(int pharmacyId,String pharmacy){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Are you want to call?");
         alertDialogBuilder.setPositiveButton("yes",
-                (arg0, arg1) -> loadVideoData(pharmacyId));
+                (arg0, arg1) -> loadVideoData(pharmacyId,pharmacy));
 
         alertDialogBuilder.setNegativeButton("No", (dialog, which) -> dialog.dismiss());
 
@@ -221,7 +221,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     String userId="";
     String content="";
-    private void loadVideoData(int pharmacyId) {
+    private void loadVideoData(int pharmacyId,String pharmacy) {
         progress_bar.setVisibility(View.VISIBLE);
 
         compositeDisposable.add(mService.getVideoContent(pharmacyId).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<ContentResponses>() {
@@ -242,7 +242,7 @@ public class DashboardActivity extends AppCompatActivity {
                         else {
                             userId=contentResponses.data_list.content;
                             content=contentResponses.data_list.content;
-                            call(pharmacyId);
+                            call(pharmacyId,pharmacy);
                         }
 
                     }
@@ -263,7 +263,7 @@ public class DashboardActivity extends AppCompatActivity {
         }));
 
     }
-    private void call(int pharmacyId) {
+    private void call(int pharmacyId,String pharmacy) {
 
 
         compositeDisposable.add(mService.postSession("46912884","a2d1df9de1f4fc9a7c4aaad18494eed44f3a700c",pharmacyId).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.io()).subscribe(new Consumer<APIResponses>() {
@@ -273,6 +273,7 @@ public class DashboardActivity extends AppCompatActivity {
                 status(content);
                 Intent intent= new Intent(DashboardActivity.this, CallingActivity.class);
                 intent.putExtra("value",userId);
+                intent.putExtra("call",pharmacy);
                 intent.putExtra("session",apiResponses.data_session);
                 intent.putExtra("token",apiResponses.data_token);
                 startActivity(intent);

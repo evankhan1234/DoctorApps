@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,17 +24,22 @@ public class CallingActivity extends AppCompatActivity {
     String user="";
     String session="";
     String token="";
+    String call="";
     DatabaseReference reference;
     private DatabaseReference usersRef;
+    TextView name_calling;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calling);
         cancelCallBtn=findViewById(R.id.cancel_call);
+        name_calling=findViewById(R.id.name_calling);
         usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         user = getIntent().getStringExtra("value");
         session = getIntent().getStringExtra("session");
         token = getIntent().getStringExtra("token");
+        call = getIntent().getStringExtra("call");
+        name_calling.setText(call);
         cancelCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
