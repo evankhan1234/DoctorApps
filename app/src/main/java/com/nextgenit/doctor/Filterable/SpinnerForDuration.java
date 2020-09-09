@@ -25,6 +25,7 @@ import com.nextgenit.doctor.Interface.DurationCloseDialogListener;
 import com.nextgenit.doctor.Interface.DurationInterface;
 import com.nextgenit.doctor.Interface.DurationTypeInterface;
 import com.nextgenit.doctor.R;
+import com.nextgenit.doctor.Utils.Common;
 
 import java.util.List;
 
@@ -115,7 +116,12 @@ public class SpinnerForDuration implements Filterable {
             @Override
             public void onClick(View v) {
                 closeSpinerDialog();
-                durationCloseDialogListener.onShow();
+                if (!Common.type.equals("ON")){
+                    durationCloseDialogListener.onShow();
+                }
+                else{
+                    Common.type="";
+                }
             }
         });
         rippleViewAdd.setOnClickListener(new View.OnClickListener() {

@@ -25,6 +25,7 @@ import com.nextgenit.doctor.Interface.DoseCloseDialogListener;
 import com.nextgenit.doctor.Interface.DoseInterface;
 import com.nextgenit.doctor.Interface.DoseTypeInterface;
 import com.nextgenit.doctor.R;
+import com.nextgenit.doctor.Utils.Common;
 
 import java.util.List;
 
@@ -114,7 +115,12 @@ public class SpinnerForDose implements Filterable {
             @Override
             public void onClick(View v) {
                 closeSpinerDialog();
-                doseCloseDialogListener.onShow();
+                if (!Common.type.equals("ON")){
+                    doseCloseDialogListener.onShow();
+                }
+                else{
+                    Common.type="";
+                }
             }
         });
         rippleViewAdd.setOnClickListener(new View.OnClickListener() {
