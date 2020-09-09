@@ -37,10 +37,13 @@ import com.nextgenit.doctor.Interface.AdviceTypeInterface;
 import com.nextgenit.doctor.Interface.AdviseInterface;
 import com.nextgenit.doctor.Interface.DiagnosisInterface;
 import com.nextgenit.doctor.Interface.DiagnosisTypeInterface;
+import com.nextgenit.doctor.Interface.DoseCloseDialogListener;
 import com.nextgenit.doctor.Interface.DoseInterface;
 import com.nextgenit.doctor.Interface.DoseTypeInterface;
+import com.nextgenit.doctor.Interface.DurationCloseDialogListener;
 import com.nextgenit.doctor.Interface.DurationInterface;
 import com.nextgenit.doctor.Interface.DurationTypeInterface;
+import com.nextgenit.doctor.Interface.InstructionCloseDialogListener;
 import com.nextgenit.doctor.Interface.InstructionInterface;
 import com.nextgenit.doctor.Interface.InstructionTypeInterface;
 import com.nextgenit.doctor.Interface.InvestigationInterface;
@@ -233,14 +236,14 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         tv_dose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface);
+                spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface,doseCloseDialogListener);
                 spinnerForDose.showSpinerDialog();
             }
         });
         tv_duration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface);
+                spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface,durationCloseDialogListener);
                 spinnerForDuration.showSpinerDialog();
             }
         });
@@ -254,7 +257,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         tv_instruction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface);
+                spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface,instructionCloseDialogListener);
                 spinnerForInstruction.showSpinerDialog();
             }
         });
@@ -312,6 +315,35 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
         });
     }
 
+    DurationCloseDialogListener durationCloseDialogListener= new DurationCloseDialogListener() {
+        @Override
+        public void onShow() {
+
+            if (arrayListMedication.size() > 0) {
+                arrayListMedication.remove(arrayListMedication.size()-1);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListMedication.size() > 0) {
+                tv_medication_for.setVisibility(View.GONE);
+                rc_medication.setVisibility(View.VISIBLE);
+            } else {
+                rc_medication.setVisibility(View.GONE);
+                tv_medication_for.setVisibility(View.VISIBLE);
+            }
+            if (arrayListDose.size() > 0) {
+                arrayListDose.remove(arrayListDose.size()-1);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListDose.size() > 0) {
+                tv_dose_for.setVisibility(View.GONE);
+                rc_dose.setVisibility(View.VISIBLE);
+            } else {
+                rc_dose.setVisibility(View.GONE);
+                tv_dose_for.setVisibility(View.VISIBLE);
+            }
+
+        }
+    };
     private void showFor(){
         int value = 0;
         int valueFor = 0;
@@ -920,13 +952,67 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
     };
 
     private void onDoseShow() {
-        spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface);
+        spinnerForDose = new SpinnerForDose(PrescriptionEngineActivity.this, doseArrayList, "Select Dose", doseInterface, "D", doseTypeInterface,doseCloseDialogListener);
         spinnerForDose.showSpinerDialog();
     }
+    DoseCloseDialogListener doseCloseDialogListener= new DoseCloseDialogListener() {
+        @Override
+        public void onShow() {
+            if (arrayListMedication.size() > 0) {
+                arrayListMedication.remove(arrayListMedication.size()-1);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListMedication.size() > 0) {
+                tv_medication_for.setVisibility(View.GONE);
+                rc_medication.setVisibility(View.VISIBLE);
+            } else {
+                rc_medication.setVisibility(View.GONE);
+                tv_medication_for.setVisibility(View.VISIBLE);
+            }
 
+        }
+    };
+    InstructionCloseDialogListener instructionCloseDialogListener= new InstructionCloseDialogListener() {
+        @Override
+        public void onShow() {
+            if (arrayListMedication.size() > 0) {
+                arrayListMedication.remove(arrayListMedication.size()-1);
+                medicationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListMedication.size() > 0) {
+                tv_medication_for.setVisibility(View.GONE);
+                rc_medication.setVisibility(View.VISIBLE);
+            } else {
+                rc_medication.setVisibility(View.GONE);
+                tv_medication_for.setVisibility(View.VISIBLE);
+            }
+            if (arrayListDose.size() > 0) {
+                arrayListDose.remove(arrayListDose.size()-1);
+                doseRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListDose.size() > 0) {
+                tv_dose_for.setVisibility(View.GONE);
+                rc_dose.setVisibility(View.VISIBLE);
+            } else {
+                rc_dose.setVisibility(View.GONE);
+                tv_dose_for.setVisibility(View.VISIBLE);
+            }
+            if (arrayListDuration.size() > 0) {
+                arrayListDuration.remove(arrayListDuration.size()-1);
+                durationRemoveOrAddAdapter.notifyDataSetChanged();
+            }
+            if (arrayListDuration.size() > 0) {
+                tv_duration_for.setVisibility(View.GONE);
+                rc_duration.setVisibility(View.VISIBLE);
+            } else {
+                rc_duration.setVisibility(View.GONE);
+                tv_duration_for.setVisibility(View.VISIBLE);
+            }
+        }
+    };
     private void onDurationShow() {
 
-        spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface);
+        spinnerForDuration = new SpinnerForDuration(PrescriptionEngineActivity.this, durationArrayList, "Select Duration", "D", durationTypeInterface,durationCloseDialogListener);
         spinnerForDuration.showSpinerDialog();
 
 
@@ -934,7 +1020,7 @@ public class PrescriptionEngineActivity extends AppCompatActivity {
 
     private void onInstructionShow() {
 
-        spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface);
+        spinnerForInstruction = new SpinnerForInstruction(PrescriptionEngineActivity.this, instructionArrayList, "Select Instruction", instructionInterface, "D", instructionTypeInterface,instructionCloseDialogListener);
         spinnerForInstruction.showSpinerDialog();
 
 

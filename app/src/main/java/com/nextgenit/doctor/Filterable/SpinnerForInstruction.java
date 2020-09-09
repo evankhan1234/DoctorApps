@@ -21,6 +21,7 @@ import com.nextgenit.doctor.Adapter.DoseAdapter;
 import com.nextgenit.doctor.Adapter.InstructionAdapter;
 import com.nextgenit.doctor.Interface.DoseInterface;
 import com.nextgenit.doctor.Interface.DoseTypeInterface;
+import com.nextgenit.doctor.Interface.InstructionCloseDialogListener;
 import com.nextgenit.doctor.Interface.InstructionInterface;
 import com.nextgenit.doctor.Interface.InstructionTypeInterface;
 import com.nextgenit.doctor.R;
@@ -43,14 +44,15 @@ public class SpinnerForInstruction implements Filterable {
     String types;
     InstructionInterface uccMemberClickListener;
     InstructionTypeInterface investigationTypeInterface;
-
-    public SpinnerForInstruction(Activity activity, List<String> items, String dialogTitle, InstructionInterface uccMemberClickListeners,String type,InstructionTypeInterface investigationTypeInterfaces) {
+    InstructionCloseDialogListener instructionCloseDialogListener;
+    public SpinnerForInstruction(Activity activity, List<String> items, String dialogTitle, InstructionInterface uccMemberClickListeners,String type,InstructionTypeInterface investigationTypeInterfaces,InstructionCloseDialogListener instructionCloseDialogListener) {
         this.items = items;
         this.context = activity;
         this.dTitle = dialogTitle;
         this.types = type;
         this.uccMemberClickListener = uccMemberClickListeners;
         this.investigationTypeInterface = investigationTypeInterfaces;
+        this.instructionCloseDialogListener = instructionCloseDialogListener;
     }
 
 
@@ -111,6 +113,7 @@ public class SpinnerForInstruction implements Filterable {
             @Override
             public void onClick(View v) {
                 closeSpinerDialog();
+                instructionCloseDialogListener.onShow();
             }
         });
         rippleViewAdd.setOnClickListener(new View.OnClickListener() {
